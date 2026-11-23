@@ -15,6 +15,11 @@ var bg: ColorRect
 
 
 func _ready() -> void:
+	if OS.has_feature("web"):
+		# installed (PWA) copies cache the game: switch to a newer version as soon as one exists
+		JavaScriptBridge.pwa_update_available.connect(_on_pwa_update)
+		if JavaScriptBridge.pwa_needs_update():
+			_on_pwa_update()
 	theme = make_theme()
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -24,6 +29,12 @@ func _ready() -> void:
 	_build_menu()
 	Net.welcomed.connect(_on_welcomed)
 	Net.connection_failed.connect(_on_failed)
+
+
+func _on_pwa_update() -> void:
+	# only refresh while still on the menu, never in the middle of a game
+	if menu == null or menu.visible:
+		JavaScriptBridge.pwa_update()
 
 
 static func make_theme() -> Theme:
