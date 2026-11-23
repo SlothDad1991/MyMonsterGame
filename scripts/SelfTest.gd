@@ -11,7 +11,7 @@ func _process(delta: float) -> void:
 	_tick += delta
 	if _tick >= 1.0:
 		_tick = 0.0
-		print("tick frame=%d wilds=%d" % [Engine.get_process_frames(), Net.server.wilds.size() if Net.server else -1])
+		print("tick frame=%d players=%d" % [Engine.get_process_frames(), Net.server.players.size() if Net.server else -1])
 
 
 func check(cond: bool, what: String) -> void:
@@ -40,13 +40,22 @@ func _ready() -> void:
 	s.on_hello(1001, "Bot", "dollfin")
 	s.on_hello(1002, "bot", "anoleaf")
 	check(s.players[1002].name == "bot2", "duplicate names get a number")
-	check(s.wilds.size() > 0, "wild monsters spawned")
 	await get_tree().create_timer(0.3).timeout
-	check(world.wilds.size() > 0, "client sees wild monsters")
+	check(world.wilds.is_empty(), "no monsters roam the map")
 	check(world.players.size() == 2, "client sees other players")
 	world.my_pos = Vector2i(12, 13)
 	await get_tree().create_timer(0.3).timeout
 	await shot("world")
+
+	# --- encounters only in tall grass, with that area's monsters
+	var zone: Dictionary = GameData.zone_at(Vector2i(10, 8))
+	check(zone.get("name", "") == "North Meadow", "grass areas are found by position")
+	var seen := {}
+	var rng2 := RandomNumberGenerator.new()
+	for i in 200:
+		seen[GameData.pick_zone_species(zone, rng2)] = true
+	check(seen.keys().all(func(k): return zone.species.has(k)), "encounters only pick that area's monsters")
+	check(GameData.zone_at(GameData.town_center).is_empty(), "no encounters in town")
 
 	# --- evolution
 	var ev := GameData.make_monster("vamporm", 8, "evo1")
@@ -61,7 +70,7 @@ func _ready() -> void:
 	host.party[0].level = 30
 	GameData.calc_stats(host.party[0])
 	host.party[0].hp = host.party[0].max_hp
-	check(_start_wild(s, 1), "walking into a wild monster starts a battle")
+	check(_start_wild(s, 1), "walking in tall grass can start a battle")
 	await get_tree().process_frame
 	check(world.battle_panel.visible, "battle screen opens")
 	await get_tree().create_timer(0.6).timeout
@@ -159,16 +168,25 @@ func _ready() -> void:
 
 
 func _start_wild(s, pid: int) -> bool:
+	## step into tall grass with the encounter chance forced to 100%
 	var p = s.players[pid]
-	for w in s.wilds.values():
-		if w.in_battle:
-			continue
-		for d in [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]:
-			var n: Vector2i = w.pos + d
-			if GameData.walkable(n) and s._occupied_by_wild(n) == "":
-				p.pos = n
-				s.on_move(pid, w.pos, 0)
-				return p.status == "battle"
+	var z: Dictionary = GameData.ZONES[0]
+	var r: Rect2i = z.rect
+	s.encounter_rate = 1.0
+	p.safe_steps = 0
+	for y in range(r.position.y, r.end.y):
+		for x in range(r.position.x, r.end.x):
+			var t := Vector2i(x, y)
+			if GameData.tile_at(t) != GameData.T.TALL:
+				continue
+			for d in [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]:
+				var n: Vector2i = t + d
+				if GameData.walkable(n):
+					p.pos = n
+					s.on_move(pid, t, 0)
+					s.encounter_rate = s.ENCOUNTER_RATE
+					return p.status == "battle"
+	s.encounter_rate = s.ENCOUNTER_RATE
 	return false
 
 

@@ -1,17 +1,15 @@
 extends Node
-## Authoritative game server: world, wild monsters, battles, trades, saves.
+## Authoritative game server: world, random encounters, battles, trades, saves.
 ## Only exists on the machine that hosts.
 
-const WILD_COUNT := 24
 const SYNC_INTERVAL := 0.1
-const WANDER_INTERVAL := 0.9
+const ENCOUNTER_RATE := 0.12 # chance per step in tall grass
 const STARTER_LEVEL := 5
 
 var net # the Net autoload
 var rng := RandomNumberGenerator.new()
 
 var players := {} # pid -> player dict
-var wilds := {}   # wid -> wild dict
 var battles := {} # bid -> battle dict
 var trades := {}  # tid -> trade dict
 var requests := {} # "kind:from:to" -> unix time
@@ -19,7 +17,7 @@ var saves := {}   # lowercase name -> {party, box}
 
 var _next_id := 1
 var _sync_t := 0.0
-var _wander_t := 0.0
+var encounter_rate := ENCOUNTER_RATE
 var _save_t := 0.0
 var _dirty := false
 
@@ -31,8 +29,6 @@ func _ready() -> void:
 	rng.randomize()
 	save_path = net.save_path
 	_load_saves()
-	for i in WILD_COUNT:
-		_spawn_wild()
 
 
 func _new_id(prefix: String) -> String:
@@ -42,16 +38,10 @@ func _new_id(prefix: String) -> String:
 
 func _process(delta: float) -> void:
 	_sync_t += delta
-	_wander_t += delta
 	_save_t += delta
 	if _sync_t >= SYNC_INTERVAL:
 		_sync_t = 0.0
 		_broadcast_world()
-	if _wander_t >= WANDER_INTERVAL:
-		_wander_t = 0.0
-		_wander_wilds()
-		while wilds.size() < WILD_COUNT:
-			_spawn_wild()
 	if _save_t >= 10.0:
 		_save_t = 0.0
 		if _dirty:
@@ -162,9 +152,7 @@ func _broadcast_world() -> void:
 	for p in players.values():
 		var lead: String = p.party[0].species if p.party.size() > 0 else ""
 		plist.append([p.id, p.name, p.pos.x, p.pos.y, p.dir, p.status, p.color, lead])
-	var wlist := []
-	for w in wilds.values():
-		wlist.append([w.id, w.species, w.pos.x, w.pos.y, w.level, w.in_battle])
+	var wlist := [] # no monsters roam the map: they appear in the tall grass
 	for pid in players:
 		if pid == multiplayer.get_unique_id():
 			net.s_world(plist, wlist)
@@ -172,55 +160,9 @@ func _broadcast_world() -> void:
 			net.rpc_id(pid, "s_world", plist, wlist)
 
 
-func _occupied_by_wild(pos: Vector2i) -> String:
-	for w in wilds.values():
-		if w.pos == pos:
-			return w.id
-	return ""
-
-
 func _occupied_by_player(pos: Vector2i) -> bool:
 	for p in players.values():
 		if p.pos == pos:
-			return true
-	return false
-
-
-func _spawn_wild() -> void:
-	for attempt in 60:
-		var pos := Vector2i(rng.randi_range(1, GameData.MAP_W - 2), rng.randi_range(1, GameData.MAP_H - 2))
-		if GameData.tile_at(pos) != GameData.T.TALL:
-			continue
-		if _occupied_by_wild(pos) != "" or _occupied_by_player(pos):
-			continue
-		var species := GameData.pick_wild_species(rng)
-		var dist := Vector2(pos).distance_to(Vector2(GameData.town_center))
-		var level := clampi(2 + int(dist / 5.0) + rng.randi_range(-1, 1), 2, 30)
-		var id := _new_id("w")
-		wilds[id] = {"id": id, "species": species, "level": level, "pos": pos, "in_battle": false}
-		return
-
-
-func _wander_wilds() -> void:
-	var dirs := [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]
-	for w in wilds.values():
-		if w.in_battle or rng.randf() > 0.4:
-			continue
-		var np: Vector2i = w.pos + dirs[rng.randi() % 4]
-		var t := GameData.tile_at(np)
-		if t != GameData.T.TALL and t != GameData.T.GRASS:
-			continue
-		# stay close to tall grass: only step onto short grass next to tall grass
-		if t == GameData.T.GRASS and not _near_tall(np):
-			continue
-		if _occupied_by_wild(np) != "" or _occupied_by_player(np):
-			continue
-		w.pos = np
-
-
-func _near_tall(p: Vector2i) -> bool:
-	for d in [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]:
-		if GameData.tile_at(p + d) == GameData.T.TALL:
 			return true
 	return false
 
@@ -239,17 +181,28 @@ func on_move(pid: int, target: Vector2i, dir: int) -> void:
 	if absi(step.x) + absi(step.y) != 1 or not GameData.walkable(target):
 		net.to_client(pid, "s_teleport", [p.pos.x, p.pos.y])
 		return
-	var wid := _occupied_by_wild(target)
-	if wid != "":
-		if not wilds[wid].in_battle:
-			_start_wild_battle(p, wilds[wid])
-		net.to_client(pid, "s_teleport", [p.pos.x, p.pos.y])
-		return
 	p.pos = target
-	if target == GameData.heal_tile:
+	if GameData.tile_at(target) == GameData.T.TALL:
+		_maybe_encounter(p)
+	elif target == GameData.heal_tile:
 		_heal_party(p)
 		net.to_client(pid, "s_party", [p.party])
 		net.to_client(pid, "s_toast", ["Your monsters are fully healed!"])
+
+
+## Each step in tall grass may start a battle with a monster from that patch.
+func _maybe_encounter(p: Dictionary) -> void:
+	if p.get("safe_steps", 0) > 0:
+		p.safe_steps -= 1
+		return
+	if rng.randf() >= encounter_rate or not _has_healthy(p):
+		return
+	var zone := GameData.zone_at(p.pos)
+	if zone.is_empty():
+		return
+	var species := GameData.pick_zone_species(zone, rng)
+	var level := rng.randi_range(int(zone.levels[0]), int(zone.levels[1]))
+	_start_wild_battle(p, species, level)
 
 
 func _heal_party(p: Dictionary) -> void:
@@ -378,14 +331,10 @@ func _make_side(p: Dictionary) -> Dictionary:
 		"action": {}, "must_switch": false, "wild_id": ""}
 
 
-func _start_wild_battle(p: Dictionary, w: Dictionary) -> void:
-	if not _has_healthy(p):
-		net.to_client(p.id, "s_toast", ["Your monsters need healing first (pink pad in town)."])
-		return
-	w.in_battle = true
-	var mon := GameData.make_monster(w.species, w.level, _new_id("m"))
+func _start_wild_battle(p: Dictionary, species: String, level: int) -> void:
+	var mon := GameData.make_monster(species, level, _new_id("m"))
 	var wild_side := {"pid": -1, "name": "Wild " + GameData.mon_name(mon), "party": [mon],
-		"active": 0, "action": {}, "must_switch": false, "wild_id": w.id}
+		"active": 0, "action": {}, "must_switch": false, "wild_id": ""}
 	var b := _new_battle("wild", _make_side(p), wild_side)
 	_log(b, "A wild %s (Lv %d) appeared!" % [GameData.mon_name(mon), mon.level])
 	_log(b, "Go, %s!" % GameData.mon_name(_active(b.sides[0])))
@@ -621,13 +570,7 @@ func _end_battle(b: Dictionary, winner_si: int) -> void:
 	for si in 2:
 		var s: Dictionary = b.sides[si]
 		if s.pid < 0:
-			# wild monster: defeated / caught ones disappear, others go back to roaming
-			if wilds.has(s.wild_id):
-				if winner_si == si or winner_si == -1:
-					wilds[s.wild_id].in_battle = false
-				else:
-					wilds.erase(s.wild_id)
-			continue
+			continue # wild monsters simply vanish back into the grass
 		if not players.has(s.pid):
 			continue
 		var p: Dictionary = players[s.pid]
@@ -640,6 +583,7 @@ func _end_battle(b: Dictionary, winner_si: int) -> void:
 			net.to_client(p.id, "s_teleport", [p.pos.x, p.pos.y])
 		p.status = "free"
 		p.battle = ""
+		p.safe_steps = 3 # a few calm steps before the next encounter
 		net.to_client(p.id, "s_party", [p.party])
 
 	_broadcast_battle(b)

@@ -32,6 +32,7 @@ var bump_t := 0.0
 var step_parity := false
 var anim_t := 0.0
 var follower_draw := Vector2.ZERO
+var current_zone := ""
 
 var players := {} # id -> {name, pos, draw, dir, status, color, lead, step_t}
 var wilds := {}   # id -> {species, pos, draw, level, in_battle, flip}
@@ -90,7 +91,7 @@ func setup(me: Dictionary) -> void:
 	if me.get("returning", false):
 		show_toast("Welcome back, %s!" % my_name)
 	else:
-		show_toast("Welcome, %s! Wild monsters live in the tall grass." % my_name)
+		show_toast("Welcome, %s! Walk through tall grass to find monsters." % my_name)
 
 
 func _center(p: Vector2i) -> Vector2:
@@ -197,11 +198,6 @@ func _player_at(p: Vector2i) -> int:
 func _try_move(d: Vector2i) -> void:
 	my_dir = DIRS.find(d)
 	var target := my_pos + d
-	var w := _wild_at(target)
-	if not w.is_empty():
-		Net.to_server("c_move", [target.x, target.y, my_dir]) # the server starts the battle
-		bump_t = 0.5
-		return
 	if not GameData.walkable(target):
 		bump_t = 0.15
 		return
@@ -209,7 +205,12 @@ func _try_move(d: Vector2i) -> void:
 	my_pos = target
 	move_t = MOVE_TIME
 	step_parity = not step_parity
-	Net.to_server("c_move", [target.x, target.y, my_dir])
+	Net.to_server("c_move", [target.x, target.y, my_dir]) # the server may start an encounter
+	var zone_name: String = GameData.zone_at(target).get("name", "")
+	if zone_name != current_zone:
+		current_zone = zone_name
+		if zone_name != "":
+			show_toast(zone_name.to_upper())
 
 
 func _unhandled_input(event: InputEvent) -> void:

@@ -27,6 +27,20 @@ var monsters: Dictionary = {}
 var _tex_cache := {}
 var moves: Dictionary = {}
 var map: Array = [] # map[y][x] -> T
+# Tall-grass areas: which monsters live there and at what levels (weights = how common).
+const ZONES := [
+	{"name": "North Meadow", "rect": Rect2i(4, 4, 14, 9), "levels": [2, 5],
+		"species": {"cairfrey": 30, "vamporm": 30, "propellercat": 20, "pigabyte": 20}},
+	{"name": "East Hills", "rect": Rect2i(42, 3, 13, 8), "levels": [4, 7],
+		"species": {"propellercat": 25, "lambert": 25, "noctula": 20, "cardiling": 15, "merlicun": 15}},
+	{"name": "Old Woods", "rect": Rect2i(5, 26, 12, 10), "levels": [5, 8],
+		"species": {"selket": 30, "sludgehog": 25, "vamporm": 25, "eyenemy": 20}},
+	{"name": "South Field", "rect": Rect2i(22, 30, 10, 6), "levels": [6, 9],
+		"species": {"axolightl": 35, "tweesher": 25, "chillimp": 20, "cairfrey": 20}},
+	{"name": "Far East", "rect": Rect2i(44, 18, 8, 7), "levels": [8, 12],
+		"species": {"wrougon": 20, "eyenemy": 20, "noctula": 20, "merlicun": 20, "chillimp": 20}},
+]
+
 var town_center := Vector2i(30, 20)
 var heal_tile := Vector2i(30, 17)
 
@@ -60,9 +74,8 @@ func _generate_map() -> void:
 		map.append(row)
 
 	# tall grass patches
-	var patches := [Rect2i(4, 4, 14, 9), Rect2i(42, 3, 13, 8), Rect2i(5, 26, 12, 10),
-		Rect2i(22, 30, 10, 6), Rect2i(44, 18, 8, 7)]
-	for r in patches:
+	for z in ZONES:
+		var r: Rect2i = z.rect
 		for y in range(r.position.y, r.end.y):
 			for x in range(r.position.x, r.end.x):
 				if rng.randf() < 0.85:
@@ -186,9 +199,9 @@ func give_xp(m: Dictionary, amount: int) -> Array:
 
 ## Keeps saves from older versions working (renamed monsters, removed moves).
 func migrate_monster(m: Dictionary) -> void:
-	var renamed := {"embertail": "agnite", "splashkit": "dollfin", "sproutling": "anoleaf"}
+	var old_names := {"embertail": "agnite", "splashkit": "dollfin", "sproutling": "anoleaf"}
 	if not monsters.has(m.species):
-		m.species = renamed.get(m.species, "cairfrey")
+		m.species = old_names.get(m.species, "cairfrey")
 	var keep := []
 	for mid in m.get("moves", []):
 		if moves.has(mid):
@@ -213,6 +226,29 @@ func type_multiplier(move_type: String, def_types: Array) -> float:
 	for t in def_types:
 		mult *= row.get(t, 1.0)
 	return mult
+
+
+func zone_at(p: Vector2i) -> Dictionary:
+	for z in ZONES:
+		if z.rect.has_point(p):
+			return z
+	return {}
+
+
+func pick_zone_species(zone: Dictionary, rng: RandomNumberGenerator) -> String:
+	var table: Dictionary = zone.species
+	var total := 0
+	for id in table:
+		if monsters.has(id):
+			total += int(table[id])
+	var roll := rng.randi_range(1, max(1, total))
+	for id in table:
+		if not monsters.has(id):
+			continue
+		roll -= int(table[id])
+		if roll <= 0:
+			return id
+	return table.keys()[0]
 
 
 func starters() -> Array:
@@ -288,6 +324,6 @@ func draw_icon(ci: CanvasItem, species: String, center: Vector2, frame := 0, fli
 ## icon, bigger sizes the front sprite.
 func draw_monster(ci: CanvasItem, species: String, c: Vector2, s: float, flip := false, bob := 0.0) -> void:
 	if s <= 28.0:
-		draw_icon(ci, species, c + Vector2(0, bob), int(Time.get_ticks_msec() / 400) % 2, flip)
+		draw_icon(ci, species, c + Vector2(0, bob), int(Time.get_ticks_msec() / 400.0) % 2, flip)
 	else:
 		draw_front(ci, species, c + Vector2(0, bob), maxf(1.0, round(s / 64.0)), flip)
