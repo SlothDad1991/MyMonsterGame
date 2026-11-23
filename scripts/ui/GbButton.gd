@@ -22,7 +22,7 @@ func _on_hover() -> void:
 
 
 func _draw() -> void:
-	var y := floor((size.y - 7) / 2.0)
+	var y := floorf((size.y - 7) / 2.0)
 	if has_focus():
 		Gb.cursor(self, Vector2(1, y))
 	elif selected_mark:

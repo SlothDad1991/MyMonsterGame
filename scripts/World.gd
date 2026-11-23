@@ -356,7 +356,7 @@ func _draw_tile(x: int, y: int, t: int) -> void:
 		T.FLOWER:
 			draw_rect(Rect2(o, Vector2(16, 16)), COL.ground)
 			var open := int(anim_t * 1.6 + x) % 2 == 0 # flowers sway, like the originals
-			for c in [Vector2(4, 4), Vector2(11, 10)]:
+			for c: Vector2 in [Vector2(4, 4), Vector2(11, 10)]:
 				var p := o + c
 				if open:
 					draw_rect(Rect2(p + Vector2(-1, 0), Vector2(3, 1)), COL.heal)
