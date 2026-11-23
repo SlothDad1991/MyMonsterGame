@@ -1,0 +1,72 @@
+{
+  "embertail": {
+    "name": "Embertail", "types": ["Fire"], "starter": true,
+    "base": {"hp": 45, "atk": 55, "def": 40, "spd": 60},
+    "color": "#e8642c", "accent": "#ffd24a", "shape": "fox",
+    "catch_rate": 45, "wild_weight": 0,
+    "moves": [[1, "scratch"], [1, "ember"], [9, "quick_jab"], [16, "flame_burst"]]
+  },
+  "splashkit": {
+    "name": "Splashkit", "types": ["Water"], "starter": true,
+    "base": {"hp": 50, "atk": 48, "def": 55, "spd": 45},
+    "color": "#3b8fe0", "accent": "#bfe6ff", "shape": "seal",
+    "catch_rate": 45, "wild_weight": 0,
+    "moves": [[1, "tackle"], [1, "water_gun"], [9, "quick_jab"], [16, "bubble_jet"]]
+  },
+  "sproutling": {
+    "name": "Sproutling", "types": ["Grass"], "starter": true,
+    "base": {"hp": 55, "atk": 45, "def": 50, "spd": 45},
+    "color": "#4caf50", "accent": "#c5f27a", "shape": "bulb",
+    "catch_rate": 45, "wild_weight": 0,
+    "moves": [[1, "tackle"], [1, "vine_lash"], [9, "quick_jab"], [16, "leaf_storm"]]
+  },
+  "voltwisp": {
+    "name": "Voltwisp", "types": ["Electric"],
+    "base": {"hp": 38, "atk": 50, "def": 35, "spd": 80},
+    "color": "#f5d03b", "accent": "#7a5cff", "shape": "wisp",
+    "catch_rate": 120, "wild_weight": 8,
+    "moves": [[1, "spark"], [5, "quick_jab"], [14, "thunder_bolt"]]
+  },
+  "pebbloon": {
+    "name": "Pebbloon", "types": ["Rock"],
+    "base": {"hp": 50, "atk": 55, "def": 75, "spd": 25},
+    "color": "#8d8174", "accent": "#5b5048", "shape": "blob",
+    "catch_rate": 150, "wild_weight": 10,
+    "moves": [[1, "tackle"], [5, "rock_toss"], [15, "rockslide"]]
+  },
+  "fluffinch": {
+    "name": "Fluffinch", "types": ["Normal", "Flying"],
+    "base": {"hp": 40, "atk": 45, "def": 38, "spd": 70},
+    "color": "#d9a066", "accent": "#fff4d6", "shape": "bird",
+    "catch_rate": 200, "wild_weight": 16,
+    "moves": [[1, "tackle"], [3, "gust"], [12, "wing_dive"]]
+  },
+  "buzzlet": {
+    "name": "Buzzlet", "types": ["Bug"],
+    "base": {"hp": 40, "atk": 40, "def": 35, "spd": 50},
+    "color": "#9bc53d", "accent": "#2d3a12", "shape": "bug",
+    "catch_rate": 230, "wild_weight": 18,
+    "moves": [[1, "tackle"], [3, "bug_bite"], [12, "sting_swarm"]]
+  },
+  "mosscrab": {
+    "name": "Mosscrab", "types": ["Water", "Grass"],
+    "base": {"hp": 55, "atk": 60, "def": 65, "spd": 30},
+    "color": "#2f8f83", "accent": "#7fd36b", "shape": "crab",
+    "catch_rate": 90, "wild_weight": 7,
+    "moves": [[1, "water_gun"], [6, "vine_lash"], [14, "bubble_jet"]]
+  },
+  "cinderhog": {
+    "name": "Cinderhog", "types": ["Fire", "Rock"],
+    "base": {"hp": 60, "atk": 65, "def": 60, "spd": 35},
+    "color": "#7a3b2e", "accent": "#ff8a3d", "shape": "blob",
+    "catch_rate": 75, "wild_weight": 5,
+    "moves": [[1, "tackle"], [5, "ember"], [12, "rock_toss"], [18, "flame_burst"]]
+  },
+  "dustbun": {
+    "name": "Dustbun", "types": ["Normal"],
+    "base": {"hp": 45, "atk": 50, "def": 40, "spd": 60},
+    "color": "#c9c1b6", "accent": "#f2a7b8", "shape": "bunny",
+    "catch_rate": 255, "wild_weight": 20,
+    "moves": [[1, "tackle"], [4, "quick_jab"], [10, "scratch"]]
+  }
+}

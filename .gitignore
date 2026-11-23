@@ -1,0 +1,6 @@
+.godot/
+/android/
+/build/
+*.tmp
+export_credentials.cfg
+_shots/
