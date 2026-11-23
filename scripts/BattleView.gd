@@ -51,9 +51,9 @@ func _draw() -> void:
 
 	# --- foe (top right sprite, info top left)
 	var fm: Dictionary = far.party[far.active]
-	var fpos := Vector2(round(w - 58 + slide), 40)
+	var fpos := Vector2(round(w - 52 + slide), 26)
 	if fm.hp > 0:
-		GameData.draw_monster(self, fm.species, fpos, 52, true, 0.0)
+		GameData.draw_monster(self, fm.species, fpos, 44, true, 0.0)
 	var fname: String = GameData.monsters[fm.species].name.to_upper()
 	Gb.text(self, Vector2(8, 4), fname)
 	Gb.text(self, Vector2(24, 13), ":L%d" % int(fm.level))
@@ -65,20 +65,20 @@ func _draw() -> void:
 
 	# --- you (bottom left sprite, info right)
 	var nm: Dictionary = near.party[near.active]
-	var npos := Vector2(round(56 - slide), 70)
+	var npos := Vector2(round(52 - slide), 68)
 	if nm.hp > 0:
 		GameData.draw_monster(self, nm.species, npos, 56, false, 0.0)
 	var info_x := w - 120
 	var nname: String = GameData.monsters[nm.species].name.to_upper()
-	Gb.text(self, Vector2(info_x, 44), nname)
-	Gb.text(self, Vector2(info_x + 48, 53), ":L%d" % int(nm.level))
+	Gb.text(self, Vector2(info_x, 52), nname)
+	Gb.text(self, Vector2(info_x + 48, 60), ":L%d" % int(nm.level))
 	var hp := _hp_of(nm)
-	Gb.hp_bar(self, Vector2(info_x + 8, 62), 64, hp / float(nm.max_hp))
-	Gb.text_right(self, w - 16, 71, "%3d/%3d" % [int(round(hp)), int(nm.max_hp)])
+	Gb.hp_bar(self, Vector2(info_x + 8, 68), 64, hp / float(nm.max_hp))
+	Gb.text_right(self, w - 16, 77, "%3d/%3d" % [int(round(hp)), int(nm.max_hp)])
 	# bracket to the right of your info
-	draw_rect(Rect2(w - 9, 60, 1, 22), Gb.C3)
-	draw_rect(Rect2(info_x, 81, w - 8 - info_x, 1), Gb.C3)
-	_party_dots(near, Vector2(info_x + 8, 84))
+	draw_rect(Rect2(w - 9, 66, 1, 20), Gb.C3)
+	draw_rect(Rect2(info_x, 86, w - 8 - info_x, 1), Gb.C3)
+	_party_dots(near, Vector2(info_x + 8, 89))
 
 
 func _party_dots(side: Dictionary, pos: Vector2) -> void:

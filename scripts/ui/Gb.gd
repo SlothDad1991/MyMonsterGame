@@ -110,9 +110,9 @@ static func box() -> PanelContainer:
 	return PanelContainer.new()
 
 
-static func label(text: String, size := 8) -> Label:
+static func label(s: String, size := 8) -> Label:
 	var l := Label.new()
-	l.text = text
+	l.text = s
 	if size != 8:
 		l.add_theme_font_size_override("font_size", size)
 	return l
