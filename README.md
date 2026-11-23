@@ -9,6 +9,14 @@ A small multiplayer monster-catching game for family and friends, made in Godot 
    Others on the same Wi-Fi press **Join game** and type this computer's local IP (e.g. `192.168.1.20`).
    To test alone, run a second copy of the game and join `localhost`.
 
+## Play online with family (phones)
+1. On the PC: open the game, click **Host on this computer**.
+2. Double-click `host_online.bat` (first time it installs Cloudflare's free tunnel tool).
+   Copy the address it prints that ends in `.trycloudflare.com`. It changes every time you run it.
+3. Everyone opens https://slothdad1991.github.io/mymonstergame/ on their phone
+   (Share → Add to Home Screen to install it), pastes that address, and taps **Join game**.
+The world only exists while the game and that window stay open on the PC.
+
 ## Controls
 - Arrow keys / WASD, or the on-screen pad on touch screens.
 - Walk into a wild monster in the tall grass to battle it. Use **Catch** to catch it.
