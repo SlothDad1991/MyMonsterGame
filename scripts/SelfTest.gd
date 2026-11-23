@@ -58,6 +58,11 @@ func _ready() -> void:
 	check(world.battle_panel.visible, "battle screen opens")
 	await get_tree().create_timer(0.6).timeout
 	await shot("battle")
+	# regression: the host's own buttons must come back after attacking
+	world._act("move", 0)
+	await get_tree().process_frame
+	var still_waiting: bool = world.battle_actions.get_child_count() == 1 and world.battle_actions.get_child(0) is Label and world.battle_actions.get_child(0).text == "..."
+	check(not still_waiting, "host gets move buttons back after attacking")
 	check(_run_battle(s, [1]), "wild battle finishes")
 	check(host.status == "free", "host free after battle")
 	world._close_battle()

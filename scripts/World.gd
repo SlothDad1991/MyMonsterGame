@@ -765,9 +765,11 @@ func _party_buttons(side: Dictionary, skip_active: bool) -> void:
 
 func _act(kind: String, index: int) -> void:
 	battle_submenu = ""
-	Net.to_server("c_battle_action", [kind, index])
+	# show "..." first: when we are the host, the server answers instantly
+	# (inside to_server) and that answer must not be overwritten afterwards
 	_clear(battle_actions)
 	_battle_label("...")
+	Net.to_server("c_battle_action", [kind, index])
 
 
 func _close_battle() -> void:
