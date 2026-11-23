@@ -73,10 +73,18 @@ func host_and_play(port: int, player_name: String, starter: String) -> Error:
 
 func join(address: String, player_name: String, starter: String) -> Error:
 	var url := address.strip_edges()
+	for prefix in ["https://", "http://"]:
+		if url.begins_with(prefix):
+			url = url.substr(prefix.length())
+	url = url.trim_suffix("/")
 	if not url.begins_with("ws://") and not url.begins_with("wss://"):
-		if not ":" in url:
-			url += ":%d" % DEFAULT_PORT
-		url = "ws://" + url
+		if _page_is_https():
+			# a secure web page may only open secure (wss) connections
+			url = "wss://" + url
+		else:
+			if not ":" in url:
+				url += ":%d" % DEFAULT_PORT
+			url = "ws://" + url
 	var peer := WebSocketMultiplayerPeer.new()
 	var err := peer.create_client(url)
 	if err != OK:
@@ -84,6 +92,12 @@ func join(address: String, player_name: String, starter: String) -> Error:
 	multiplayer.multiplayer_peer = peer
 	pending_hello = {"name": player_name, "starter": starter}
 	return OK
+
+
+func _page_is_https() -> bool:
+	if not OS.has_feature("web"):
+		return false
+	return str(JavaScriptBridge.eval("window.location.protocol")) == "https:"
 
 
 func _on_connected() -> void:

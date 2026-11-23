@@ -164,7 +164,10 @@ func _build_menu() -> void:
 	help.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	help.modulate = Color(1, 1, 1, 0.55)
 	help.add_theme_font_size_override("font_size", 15)
-	help.text = "Host: runs the world on this computer and lets you play too. Others on your Wi-Fi join using this computer's IP address.\nMove with arrow keys / WASD or the on-screen pad. Walk into a wild monster to battle. Tap another player to battle, trade or watch."
+	var how := "Host: runs the world on this computer and lets you play too. Others on your Wi-Fi join using this computer's IP address."
+	if OS.has_feature("web"):
+		how = "Type the server address the host gave you, then Join. Tip: use your browser's \"Add to Home Screen\" to install the game."
+	help.text = how + "\nMove with arrow keys / WASD or the on-screen pad. Walk into a wild monster to battle. Tap another player to battle, trade or watch."
 	box.add_child(help)
 
 
