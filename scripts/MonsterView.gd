@@ -10,6 +10,7 @@ func _init(sp := "", sz := 64.0) -> void:
 	species = sp
 	custom_minimum_size = Vector2(sz, sz)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 
 
 func set_species(sp: String) -> void:

@@ -1,5 +1,5 @@
 extends Control
-## Start menu: pick a name and starter, then host or join.
+## Start screen: name, first monster, server, then JOIN or HOST.
 
 const MonsterView := preload("res://scripts/MonsterView.gd")
 const WorldScript := preload("res://scripts/World.gd")
@@ -8,6 +8,7 @@ const CFG_PATH := "user://client.cfg"
 var name_edit: LineEdit
 var addr_edit: LineEdit
 var status_label: Label
+var starter_label: Label
 var starter := ""
 var starter_buttons := {}
 var menu: Control
@@ -20,7 +21,8 @@ func _ready() -> void:
 		JavaScriptBridge.pwa_update_available.connect(_on_pwa_update)
 		if JavaScriptBridge.pwa_needs_update():
 			_on_pwa_update()
-	theme = make_theme()
+	theme = Gb.theme()
+	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	if Net.server != null and Net.my_id == 0:
@@ -37,39 +39,12 @@ func _on_pwa_update() -> void:
 		JavaScriptBridge.pwa_update()
 
 
-static func make_theme() -> Theme:
-	var t := Theme.new()
-	t.default_font_size = 22
-	var panel := StyleBoxFlat.new()
-	panel.bg_color = Color(0.1, 0.12, 0.18, 0.94)
-	panel.set_corner_radius_all(14)
-	panel.set_content_margin_all(16)
-	t.set_stylebox("panel", "PanelContainer", panel)
-	for state in ["normal", "hover", "pressed", "disabled", "focus"]:
-		var sb := StyleBoxFlat.new()
-		match state:
-			"normal": sb.bg_color = Color("#3b4a6b")
-			"hover": sb.bg_color = Color("#4a5d86")
-			"pressed": sb.bg_color = Color("#f0b23a")
-			"disabled": sb.bg_color = Color("#2a3042")
-			"focus":
-				sb.bg_color = Color(0, 0, 0, 0)
-				sb.border_color = Color("#f0b23a")
-				sb.set_border_width_all(2)
-		sb.set_corner_radius_all(10)
-		sb.set_content_margin_all(10)
-		t.set_stylebox(state, "Button", sb)
-	t.set_color("font_pressed_color", "Button", Color("#1b1b1b"))
-	return t
-
-
 func _show_dedicated() -> void:
 	var back := ColorRect.new()
-	back.color = Color("#1d2433")
+	back.color = Gb.C0
 	back.set_anchors_preset(Control.PRESET_FULL_RECT)
 	add_child(back)
-	var l := Label.new()
-	l.text = "Dedicated server running on port %d.\nPlayers can join from the game menu." % Net.DEFAULT_PORT
+	var l := Gb.label("SERVER RUNNING\nON PORT %d" % Net.DEFAULT_PORT)
 	l.set_anchors_preset(Control.PRESET_CENTER)
 	add_child(l)
 
@@ -79,7 +54,7 @@ func _build_menu() -> void:
 	cfg.load(CFG_PATH)
 
 	bg = ColorRect.new()
-	bg.color = Color("#1d2433")
+	bg.color = Gb.C0
 	bg.set_anchors_preset(Control.PRESET_FULL_RECT)
 	add_child(bg)
 
@@ -95,96 +70,75 @@ func _build_menu() -> void:
 	scroll.add_child(center)
 
 	var box := VBoxContainer.new()
-	box.add_theme_constant_override("separation", 14)
-	box.custom_minimum_size = Vector2(520, 0)
+	box.add_theme_constant_override("separation", 3)
+	box.custom_minimum_size = Vector2(240, 0)
 	center.add_child(box)
 
-	var title := Label.new()
-	title.text = "MONSTER GAME"
-	title.add_theme_font_size_override("font_size", 48)
+	var title := Gb.label("MONSTER GAME", 16)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	box.add_child(title)
-	var sub := Label.new()
-	sub.text = "prototype"
-	sub.modulate = Color(1, 1, 1, 0.6)
-	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	box.add_child(sub)
 
+	var name_row := HBoxContainer.new()
+	box.add_child(name_row)
+	var nl := Gb.label("NAME ")
+	nl.custom_minimum_size.x = 56
+	name_row.add_child(nl)
 	name_edit = LineEdit.new()
-	name_edit.placeholder_text = "Your name"
-	name_edit.max_length = 14
+	name_edit.max_length = 10
+	name_edit.placeholder_text = "TRAINER"
+	name_edit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	name_edit.text = cfg.get_value("client", "name", "")
-	box.add_child(name_edit)
+	name_row.add_child(name_edit)
 
-	var pick := Label.new()
-	pick.text = "Choose your first monster (new players only):"
-	box.add_child(pick)
-	var row := HBoxContainer.new()
-	row.alignment = BoxContainer.ALIGNMENT_CENTER
-	row.add_theme_constant_override("separation", 12)
-	box.add_child(row)
+	var pick_row := HBoxContainer.new()
+	pick_row.add_theme_constant_override("separation", 2)
+	box.add_child(pick_row)
 	for id in GameData.starters():
-		var b := Button.new()
-		b.toggle_mode = true
-		b.custom_minimum_size = Vector2(150, 150)
-		var v := VBoxContainer.new()
-		v.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		v.set_anchors_preset(Control.PRESET_FULL_RECT)
-		v.alignment = BoxContainer.ALIGNMENT_CENTER
-		var mv := MonsterView.new(id, 96)
-		mv.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-		v.add_child(mv)
-		var l := Label.new()
-		l.text = "%s\n%s" % [GameData.monsters[id].name, "/".join(GameData.monsters[id].types)]
-		l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		l.add_theme_font_size_override("font_size", 16)
-		v.add_child(l)
-		b.add_child(v)
-		b.pressed.connect(_pick_starter.bind(id))
-		row.add_child(b)
+		var b := GbButton.new("", _pick_starter.bind(id))
+		b.custom_minimum_size = Vector2(40, 30)
+		var mv := MonsterView.new(id, 26)
+		mv.position = Vector2(10, 2)
+		mv.size = Vector2(26, 26)
+		b.add_child(mv)
+		pick_row.add_child(b)
 		starter_buttons[id] = b
+	starter_label = Gb.label("")
+	starter_label.add_theme_constant_override("line_spacing", 2)
+	pick_row.add_child(starter_label)
 	_pick_starter(cfg.get_value("client", "starter", GameData.starters()[0]))
 
+	var addr_row := HBoxContainer.new()
+	box.add_child(addr_row)
+	var al := Gb.label("SERVER")
+	al.custom_minimum_size.x = 56
+	addr_row.add_child(al)
 	addr_edit = LineEdit.new()
-	addr_edit.placeholder_text = "Server address (e.g. 192.168.1.20)"
+	addr_edit.placeholder_text = "ask the host"
+	addr_edit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	addr_edit.text = cfg.get_value("client", "address", "" if OS.has_feature("web") else "localhost")
 	if OS.has_feature("web"):
 		# a share link like  .../MyMonsterGame/?server=abc.trycloudflare.com  fills this in
 		var from_link := str(JavaScriptBridge.eval("new URLSearchParams(window.location.search).get('server') || ''"))
 		if from_link != "":
 			addr_edit.text = from_link
-	box.add_child(addr_edit)
+	addr_row.add_child(addr_edit)
 
 	var buttons := HBoxContainer.new()
-	buttons.add_theme_constant_override("separation", 12)
+	buttons.add_theme_constant_override("separation", 4)
 	box.add_child(buttons)
-	var join_b := Button.new()
-	join_b.text = "Join game"
-	join_b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	join_b.pressed.connect(_on_join)
+	var join_b := GbButton.new("JOIN", _on_join)
 	buttons.add_child(join_b)
 	if not OS.has_feature("web"): # browsers can't host servers
-		var host_b := Button.new()
-		host_b.text = "Host on this computer"
-		host_b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		host_b.pressed.connect(_on_host)
-		buttons.add_child(host_b)
+		buttons.add_child(GbButton.new("HOST", _on_host))
+	var colours_b := GbButton.new("COLOURS", _on_colours)
+	buttons.add_child(colours_b)
 
-	status_label = Label.new()
+	status_label = Gb.label("")
 	status_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	status_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	status_label.modulate = Color("#ffd37a")
+	status_label.add_theme_color_override("font_color", Gb.C2)
 	box.add_child(status_label)
-
-	var help := Label.new()
-	help.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	help.modulate = Color(1, 1, 1, 0.55)
-	help.add_theme_font_size_override("font_size", 15)
-	var how := "Host: runs the world on this computer and lets you play too. Others on your Wi-Fi join using this computer's IP address."
-	if OS.has_feature("web"):
-		how = "Type the server address the host gave you, then Join. Tip: use your browser's \"Add to Home Screen\" to install the game."
-	help.text = how + "\nMove with arrow keys / WASD or the on-screen pad. Walk into a wild monster to battle. Tap another player to battle, trade or watch."
-	box.add_child(help)
+	_set_status("Colours: " + Palette.current)
+	join_b.call_deferred("grab_focus")
 
 
 func _pick_starter(id: String) -> void:
@@ -192,7 +146,18 @@ func _pick_starter(id: String) -> void:
 		id = GameData.starters()[0]
 	starter = id
 	for k in starter_buttons:
-		starter_buttons[k].button_pressed = (k == id)
+		starter_buttons[k].selected_mark = (k == id)
+		starter_buttons[k].queue_redraw()
+	var d: Dictionary = GameData.monsters[id]
+	starter_label.text = "%s\n%s" % [d.name.to_upper(), "/".join(d.types).to_upper()]
+
+
+func _on_colours() -> void:
+	_set_status("Colours: " + Palette.cycle())
+
+
+func _set_status(s: String) -> void:
+	status_label.text = s
 
 
 func _save_cfg() -> void:
@@ -209,23 +174,26 @@ func _player_name() -> String:
 
 
 func _on_join() -> void:
+	if addr_edit.text.strip_edges() == "":
+		_set_status("Type the server address first.")
+		return
 	_save_cfg()
-	status_label.text = "Connecting..."
+	_set_status("Connecting...")
 	var err := Net.join(addr_edit.text, _player_name(), starter)
 	if err != OK:
-		status_label.text = "Couldn't start connection (error %d)." % err
+		_set_status("Couldn't connect (error %d)." % err)
 
 
 func _on_host() -> void:
 	_save_cfg()
 	var err := Net.host_and_play(Net.DEFAULT_PORT, _player_name(), starter)
 	if err != OK:
-		status_label.text = "Couldn't host (error %d). Is another copy already hosting?" % err
+		_set_status("Couldn't host (error %d). Is the game already hosting?" % err)
 
 
 func _on_failed(reason: String) -> void:
 	if status_label:
-		status_label.text = reason
+		_set_status(reason)
 	var was_playing: bool = menu != null and not menu.visible
 	Net.multiplayer.multiplayer_peer = null
 	if was_playing:

@@ -59,10 +59,14 @@ func _ready() -> void:
 	await get_tree().create_timer(0.6).timeout
 	await shot("battle")
 	# regression: the host's own buttons must come back after attacking
-	world._act("move", 0)
+	await _skip_text(world)
+	check(world.battle_ui_ready(), "battle menu appears after the intro text")
+	world._open_moves()
 	await get_tree().process_frame
-	var still_waiting: bool = world.battle_actions.get_child_count() == 1 and world.battle_actions.get_child(0) is Label and world.battle_actions.get_child(0).text == "..."
-	check(not still_waiting, "host gets move buttons back after attacking")
+	await shot("battle_moves")
+	world._act("move", 0)
+	await _skip_text(world)
+	check(world.battle_ui_ready(), "host gets the menu back after attacking")
 	check(_run_battle(s, [1]), "wild battle finishes")
 	check(host.status == "free", "host free after battle")
 	world._close_battle()
@@ -104,7 +108,7 @@ func _ready() -> void:
 	s.on_request(1, "trade", 1001)
 	s.on_respond(1001, "trade", 1, true)
 	await get_tree().process_frame
-	check(world.trade_wrap.visible, "trade screen opens")
+	check(world.trade_panel.visible, "trade screen opens")
 	var hu: String = host.party[0].uid
 	var bu: String = b1.party[0].uid
 	s.on_trade_offer(1, hu)
@@ -118,7 +122,7 @@ func _ready() -> void:
 	check(host.party[0].uid == bu and b1.party[0].uid == hu, "trade swaps the monsters")
 	check(host.status == "free" and b2.status == "free", "everyone free after trade")
 	await get_tree().process_frame
-	check(not world.trade_wrap.visible, "trade screen closes")
+	check(not world.trade_panel.visible, "trade screen closes")
 
 	# --- disconnect mid battle
 	s.on_request(1001, "battle", 1002)
@@ -126,10 +130,19 @@ func _ready() -> void:
 	s.on_peer_disconnected(1002)
 	check(b1.status == "free" and not s.players.has(1002), "leaving mid-battle ends it cleanly")
 
-	world.open_party()
+	world.open_party("world")
 	await get_tree().process_frame
 	await shot("party")
-	world.party_panel.visible = false
+	world._close_menus()
+	world.open_start_menu()
+	await get_tree().process_frame
+	await shot("start_menu")
+	world._close_menus()
+	for pn in Gb.PALETTE_ORDER:
+		Palette.apply(pn)
+		await get_tree().process_frame
+		await shot("palette_" + pn.replace(" ", "_"))
+	Palette.apply("Pocket grey")
 	print("SELFTEST DONE: %d failure(s)" % fails)
 	for i in 20:
 		await get_tree().create_timer(0.25).timeout
@@ -175,3 +188,12 @@ func shot(shot_name: String) -> void:
 	await RenderingServer.frame_post_draw
 	var img := get_viewport().get_texture().get_image()
 	img.save_png("res://_shots/%s.png" % shot_name)
+
+
+func _skip_text(world) -> void:
+	for i in 300:
+		if not world.battle_text.is_busy():
+			break
+		world.battle_text.advance()
+		await get_tree().process_frame
+	await get_tree().process_frame

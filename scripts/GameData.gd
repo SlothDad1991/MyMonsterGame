@@ -2,7 +2,7 @@ extends Node
 ## Shared game data and rules. Loaded on both the server and every client,
 ## so the map and the monster stats are identical everywhere.
 
-const TILE := 32
+const TILE := 16
 const MAP_W := 60
 const MAP_H := 40
 const PARTY_MAX := 6

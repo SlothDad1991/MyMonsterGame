@@ -12,16 +12,22 @@ config/icon="res://icon.png"
 
 GameData="*res://scripts/GameData.gd"
 Net="*res://scripts/Net.gd"
+Palette="*res://scripts/ui/PaletteFilter.gd"
 
 [display]
 
-window/size/viewport_width=1280
-window/size/viewport_height=720
-window/stretch/mode="canvas_items"
+window/size/viewport_width=256
+window/size/viewport_height=144
+window/size/window_width_override=1280
+window/size/window_height_override=720
+window/stretch/mode="viewport"
 window/stretch/aspect="expand"
+window/stretch/scale_mode="integer"
 window/handheld/orientation=4
 
 [rendering]
 
+2d/snap/snap_2d_transforms_to_pixel=true
+2d/snap/snap_2d_vertices_to_pixel=true
 renderer/rendering_method="mobile"
 textures/canvas_textures/default_texture_filter=0
