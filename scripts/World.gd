@@ -618,7 +618,12 @@ func _focus_first(c: Control) -> void:
 		return
 	var b := _find_button(c)
 	if b:
-		b.call_deferred("grab_focus")
+		_grab.call_deferred(b)
+
+
+func _grab(b: Control) -> void:
+	if is_instance_valid(b) and b.is_inside_tree() and b.is_visible_in_tree():
+		b.grab_focus()
 
 
 func _find_button(n: Node) -> Button:
@@ -965,13 +970,14 @@ func _fill(box: PanelContainer, opts: Array, columns: int) -> void:
 			first = b
 	box.visible = true
 	if first and stack.is_empty():
-		first.call_deferred("grab_focus")
+		_grab.call_deferred(first)
 
 
 func _open_moves() -> void:
 	var me: Dictionary = battle_state.sides[battle_state.you]
 	var active: Dictionary = me.party[me.active]
 	cmd_box.visible = false
+	battle_text.show_text("")
 	var opts := []
 	for i in active.moves.size():
 		opts.append([GameData.moves[active.moves[i]].name.to_upper(), _act.bind("move", i)])
@@ -1038,7 +1044,7 @@ func _on_trade(state: Dictionary) -> void:
 		var side: Dictionary = state.sides[idx]
 		var col := VBoxContainer.new()
 		col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		col.add_theme_constant_override("separation", 0)
+		col.add_theme_constant_override("separation", 1)
 		var head: String = "YOURS" if idx == you else str(side.name).to_upper()
 		if side.confirmed:
 			head += " OK!"
@@ -1052,6 +1058,8 @@ func _on_trade(state: Dictionary) -> void:
 				col.add_child(b)
 			else:
 				var l := Gb.label(("> " if m.uid == offered_uid else "  ") + line, 8)
+				l.custom_minimum_size.y = 12
+				l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 				if m.uid != offered_uid:
 					l.add_theme_color_override("font_color", Gb.C2)
 				col.add_child(l)
