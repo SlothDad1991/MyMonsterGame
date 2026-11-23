@@ -136,7 +136,12 @@ func _build_menu() -> void:
 
 	addr_edit = LineEdit.new()
 	addr_edit.placeholder_text = "Server address (e.g. 192.168.1.20)"
-	addr_edit.text = cfg.get_value("client", "address", "localhost")
+	addr_edit.text = cfg.get_value("client", "address", "" if OS.has_feature("web") else "localhost")
+	if OS.has_feature("web"):
+		# a share link like  .../MyMonsterGame/?server=abc.trycloudflare.com  fills this in
+		var from_link := str(JavaScriptBridge.eval("new URLSearchParams(window.location.search).get('server') || ''"))
+		if from_link != "":
+			addr_edit.text = from_link
 	box.add_child(addr_edit)
 
 	var buttons := HBoxContainer.new()

@@ -6,8 +6,9 @@ echo.
 echo  1. In the game, click "Host on this computer" (keep the game open).
 echo  2. Leave THIS window open while people play.
 echo  3. Look below for a line ending in  .trycloudflare.com
-echo     Send that address (without https://) to everyone.
-echo     They open the game link on their phone, paste it, and press Join.
+echo     Send everyone this link, with that address on the end:
+echo       https://slothdad1991.github.io/MyMonsterGame/?server=THE-ADDRESS.trycloudflare.com
+echo     The server box fills in by itself - they just press Join.
 echo.
 
 set "CF=cloudflared"
