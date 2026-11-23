@@ -30,15 +30,15 @@ func _ready() -> void:
 	await shot("menu")
 	Net.save_path = "user://selftest_save.json"
 	DirAccess.remove_absolute("user://selftest_save.json")
-	var err := Net.host_and_play(9091, "Tester", "embertail")
+	var err := Net.host_and_play(9091, "Tester", "agnite")
 	check(err == OK, "host starts")
 	await get_tree().create_timer(0.3).timeout
 	var s = Net.server
 	var world = main.get_node_or_null("World")
 	check(world != null, "world created for host")
 
-	s.on_hello(1001, "Bot", "splashkit")
-	s.on_hello(1002, "bot", "sproutling")
+	s.on_hello(1001, "Bot", "dollfin")
+	s.on_hello(1002, "bot", "anoleaf")
 	check(s.players[1002].name == "bot2", "duplicate names get a number")
 	check(s.wilds.size() > 0, "wild monsters spawned")
 	await get_tree().create_timer(0.3).timeout
@@ -47,6 +47,14 @@ func _ready() -> void:
 	world.my_pos = Vector2i(12, 13)
 	await get_tree().create_timer(0.3).timeout
 	await shot("world")
+
+	# --- evolution
+	var ev := GameData.make_monster("vamporm", 8, "evo1")
+	GameData.give_xp(ev, GameData.xp_to_next(8) + 1)
+	check(ev.species == "dracune", "monsters evolve when they reach the right level")
+	var old := {"uid": "old1", "species": "embertail", "level": 7, "xp": 0, "hp": 5, "max_hp": 20, "moves": ["ember"]}
+	GameData.migrate_monster(old)
+	check(old.species == "agnite" and not old.moves.is_empty(), "old saves are converted to the new monsters")
 
 	# --- wild battle (host)
 	var host = s.players[1]
@@ -91,8 +99,8 @@ func _ready() -> void:
 	# --- pvp battle between bots, host watches
 	var b1 = s.players[1001]
 	var b2 = s.players[1002]
-	b1.party.append(GameData.make_monster("dustbun", 6, "x1"))
-	b2.party.append(GameData.make_monster("buzzlet", 6, "x2"))
+	b1.party.append(GameData.make_monster("cairfrey", 6, "x1"))
+	b2.party.append(GameData.make_monster("vamporm", 6, "x2"))
 	s.on_request(1001, "battle", 1002)
 	s.on_respond(1002, "battle", 1001, true)
 	check(b1.status == "battle" and b2.status == "battle", "pvp battle starts after accept")

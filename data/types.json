@@ -1,0 +1,90 @@
+{
+ "Sky": {
+  "Earth": 2.0,
+  "Fire": 0.5,
+  "Heroic": 2.0,
+  "Wood": 2.0
+ },
+ "Heroic": {
+  "Frost": 2.0,
+  "Cosmic": 0.5,
+  "Normal": 2.0,
+  "Shadow": 2.0,
+  "Venom": 0.5
+ },
+ "Cosmic": {
+  "Heroic": 2.0,
+  "Shadow": 0.5,
+  "Venom": 2.0
+ },
+ "Frost": {
+  "Earth": 2.0,
+  "Frost": 0.5,
+  "Metal": 0.5,
+  "Shadow": 0.5,
+  "Sky": 2.0,
+  "Water": 0.5,
+  "Wood": 2.0
+ },
+ "Lightning": {
+  "Earth": 0.5,
+  "Lightning": 0.5,
+  "Metal": 2.0,
+  "Sky": 2.0,
+  "Water": 2.0,
+  "Wood": 0.5
+ },
+ "Venom": {
+  "Earth": 0.5,
+  "Metal": 0.5,
+  "Normal": 2.0,
+  "Venom": 0.5,
+  "Water": 0.5,
+  "Wood": 2.0
+ },
+ "Wood": {
+  "Earth": 2.0,
+  "Fire": 0.5,
+  "Venom": 0.5,
+  "Water": 2.0,
+  "Wood": 0.5
+ },
+ "Water": {
+  "Fire": 2.0,
+  "Frost": 0.5,
+  "Water": 0.5,
+  "Wood": 0.5
+ },
+ "Fire": {
+  "Earth": 0.5,
+  "Fire": 0.5,
+  "Frost": 0.5,
+  "Metal": 2.0,
+  "Venom": 2.0,
+  "Water": 0.5,
+  "Wood": 2.0
+ },
+ "Earth": {
+  "Fire": 2.0,
+  "Lightning": 2.0,
+  "Sky": 0.5,
+  "Wood": 0.5
+ },
+ "Normal": {
+  "Metal": 0.5
+ },
+ "Metal": {
+  "Earth": 2.0,
+  "Fire": 0.5,
+  "Cosmic": 2.0,
+  "Metal": 0.5,
+  "Water": 0.5
+ },
+ "Shadow": {
+  "Earth": 0.5,
+  "Heroic": 0.5,
+  "Cosmic": 2.0,
+  "Normal": 0.5,
+  "Sky": 2.0
+ }
+}

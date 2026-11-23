@@ -1,19 +1,464 @@
 {
-  "tackle":       {"name": "Tackle",       "type": "Normal",   "power": 40, "accuracy": 100},
-  "scratch":      {"name": "Scratch",      "type": "Normal",   "power": 40, "accuracy": 100},
-  "quick_jab":    {"name": "Quick Jab",    "type": "Normal",   "power": 35, "accuracy": 100, "priority": 1},
-  "ember":        {"name": "Ember",        "type": "Fire",     "power": 40, "accuracy": 100},
-  "flame_burst":  {"name": "Flame Burst",  "type": "Fire",     "power": 70, "accuracy": 90},
-  "water_gun":    {"name": "Water Gun",    "type": "Water",    "power": 40, "accuracy": 100},
-  "bubble_jet":   {"name": "Bubble Jet",   "type": "Water",    "power": 65, "accuracy": 95},
-  "vine_lash":    {"name": "Vine Lash",    "type": "Grass",    "power": 45, "accuracy": 100},
-  "leaf_storm":   {"name": "Leaf Storm",   "type": "Grass",    "power": 70, "accuracy": 90},
-  "spark":        {"name": "Spark",        "type": "Electric", "power": 40, "accuracy": 100},
-  "thunder_bolt": {"name": "Thunder Bolt", "type": "Electric", "power": 75, "accuracy": 90},
-  "rock_toss":    {"name": "Rock Toss",    "type": "Rock",     "power": 50, "accuracy": 90},
-  "rockslide":    {"name": "Rockslide",    "type": "Rock",     "power": 75, "accuracy": 85},
-  "gust":         {"name": "Gust",         "type": "Flying",   "power": 40, "accuracy": 100},
-  "wing_dive":    {"name": "Wing Dive",    "type": "Flying",   "power": 60, "accuracy": 95},
-  "bug_bite":     {"name": "Bug Bite",     "type": "Bug",      "power": 40, "accuracy": 100},
-  "sting_swarm":  {"name": "Sting Swarm",  "type": "Bug",      "power": 60, "accuracy": 95}
+ "tackle": {
+  "name": "Tackle",
+  "type": "Normal",
+  "power": 40,
+  "accuracy": 100
+ },
+ "gnaw": {
+  "name": "Gnaw",
+  "type": "Normal",
+  "power": 25,
+  "accuracy": 100
+ },
+ "fire_claw": {
+  "name": "Fire Claw",
+  "type": "Fire",
+  "power": 44,
+  "accuracy": 75
+ },
+ "fire_ball": {
+  "name": "Fire Ball",
+  "type": "Fire",
+  "power": 30,
+  "accuracy": 90
+ },
+ "saber": {
+  "name": "Saber",
+  "type": "Metal",
+  "power": 55,
+  "accuracy": 80
+ },
+ "kindling_flame": {
+  "name": "Kindling Flame",
+  "type": "Fire",
+  "power": 56,
+  "accuracy": 80
+ },
+ "energy_claws": {
+  "name": "Energy Claws",
+  "type": "Lightning",
+  "power": 56,
+  "accuracy": 80
+ },
+ "all_in": {
+  "name": "All In",
+  "type": "Heroic",
+  "power": 75,
+  "accuracy": 80
+ },
+ "supernova": {
+  "name": "Supernova",
+  "type": "Fire",
+  "power": 75,
+  "accuracy": 75
+ },
+ "shadow_blast": {
+  "name": "Shadow Blast",
+  "type": "Shadow",
+  "power": 70,
+  "accuracy": 95
+ },
+ "goad": {
+  "name": "Goad",
+  "type": "Normal",
+  "power": 44,
+  "accuracy": 80
+ },
+ "grinding": {
+  "name": "Grinding",
+  "type": "Earth",
+  "power": 55,
+  "accuracy": 75
+ },
+ "font": {
+  "name": "Font",
+  "type": "Water",
+  "power": 31,
+  "accuracy": 100
+ },
+ "starfall": {
+  "name": "Starfall",
+  "type": "Cosmic",
+  "power": 31,
+  "accuracy": 100
+ },
+ "water_blast": {
+  "name": "Water Blast",
+  "type": "Water",
+  "power": 57,
+  "accuracy": 100
+ },
+ "energy_beam": {
+  "name": "Energy Beam",
+  "type": "Normal",
+  "power": 75,
+  "accuracy": 95
+ },
+ "splinter": {
+  "name": "Splinter",
+  "type": "Wood",
+  "power": 31,
+  "accuracy": 100
+ },
+ "web": {
+  "name": "Web",
+  "type": "Venom",
+  "power": 31,
+  "accuracy": 100
+ },
+ "leaf_stab": {
+  "name": "Leaf Stab",
+  "type": "Wood",
+  "power": 30,
+  "accuracy": 90
+ },
+ "feint": {
+  "name": "Feint",
+  "type": "Normal",
+  "power": 25,
+  "accuracy": 100
+ },
+ "assault": {
+  "name": "Assault",
+  "type": "Normal",
+  "power": 42,
+  "accuracy": 90
+ },
+ "whirlwind": {
+  "name": "Whirlwind",
+  "type": "Sky",
+  "power": 31,
+  "accuracy": 100
+ },
+ "needle": {
+  "name": "Needle",
+  "type": "Metal",
+  "power": 62,
+  "accuracy": 90
+ },
+ "thorn_burst": {
+  "name": "Thorn Burst",
+  "type": "Wood",
+  "power": 75,
+  "accuracy": 95
+ },
+ "pseudopod": {
+  "name": "Pseudopod",
+  "type": "Venom",
+  "power": 31,
+  "accuracy": 100
+ },
+ "stampede": {
+  "name": "Stampede",
+  "type": "Normal",
+  "power": 31,
+  "accuracy": 100
+ },
+ "greenstone": {
+  "name": "Greenstone",
+  "type": "Earth",
+  "power": 62,
+  "accuracy": 70
+ },
+ "muddle": {
+  "name": "Muddle",
+  "type": "Cosmic",
+  "power": 25,
+  "accuracy": 100
+ },
+ "quicksand": {
+  "name": "Quicksand",
+  "type": "Earth",
+  "power": 56,
+  "accuracy": 80
+ },
+ "crystal": {
+  "name": "Crystal",
+  "type": "Cosmic",
+  "power": 25,
+  "accuracy": 90
+ },
+ "muck": {
+  "name": "Muck",
+  "type": "Venom",
+  "power": 50,
+  "accuracy": 80
+ },
+ "amnesia": {
+  "name": "Amnesia",
+  "type": "Cosmic",
+  "power": 56,
+  "accuracy": 80
+ },
+ "bubble_trap": {
+  "name": "Bubble Trap",
+  "type": "Cosmic",
+  "power": 56,
+  "accuracy": 75
+ },
+ "constrict": {
+  "name": "Constrict",
+  "type": "Normal",
+  "power": 31,
+  "accuracy": 100
+ },
+ "spit_poison": {
+  "name": "Spit Poison",
+  "type": "Venom",
+  "power": 31,
+  "accuracy": 100
+ },
+ "tonguespear": {
+  "name": "Tonguespear",
+  "type": "Normal",
+  "power": 62,
+  "accuracy": 80
+ },
+ "venomous_tentacle": {
+  "name": "Venomous Tentacle",
+  "type": "Water",
+  "power": 56,
+  "accuracy": 80
+ },
+ "wing_tip": {
+  "name": "Wing Tip",
+  "type": "Sky",
+  "power": 31,
+  "accuracy": 100
+ },
+ "blade": {
+  "name": "Blade",
+  "type": "Metal",
+  "power": 31,
+  "accuracy": 100
+ },
+ "strike": {
+  "name": "Strike",
+  "type": "Normal",
+  "power": 31,
+  "accuracy": 100
+ },
+ "slice": {
+  "name": "Slice",
+  "type": "Metal",
+  "power": 30,
+  "accuracy": 90
+ },
+ "beam": {
+  "name": "Beam",
+  "type": "Heroic",
+  "power": 31,
+  "accuracy": 100
+ },
+ "perfect_cut": {
+  "name": "Perfect Cut",
+  "type": "Metal",
+  "power": 40,
+  "accuracy": 100
+ },
+ "tip": {
+  "name": "Tip",
+  "type": "Metal",
+  "power": 55,
+  "accuracy": 100
+ },
+ "meltdown": {
+  "name": "Meltdown",
+  "type": "Venom",
+  "power": 70,
+  "accuracy": 70
+ },
+ "sunburst": {
+  "name": "Sunburst",
+  "type": "Fire",
+  "power": 28,
+  "accuracy": 90
+ },
+ "wall_of_steel": {
+  "name": "Wall of Steel",
+  "type": "Metal",
+  "power": 31,
+  "accuracy": 100
+ },
+ "sleep_bomb": {
+  "name": "Sleep Bomb",
+  "type": "Cosmic",
+  "power": 56,
+  "accuracy": 75
+ },
+ "bullet": {
+  "name": "Bullet",
+  "type": "Metal",
+  "power": 31,
+  "accuracy": 100
+ },
+ "battery_acid": {
+  "name": "Battery Acid",
+  "type": "Venom",
+  "power": 56,
+  "accuracy": 80
+ },
+ "midnight_mantle": {
+  "name": "Midnight Mantle",
+  "type": "Shadow",
+  "power": 31,
+  "accuracy": 80
+ },
+ "torch": {
+  "name": "Torch",
+  "type": "Fire",
+  "power": 35,
+  "accuracy": 90
+ },
+ "sting": {
+  "name": "Sting",
+  "type": "Venom",
+  "power": 31,
+  "accuracy": 95
+ },
+ "blossom": {
+  "name": "Blossom",
+  "type": "Wood",
+  "power": 31,
+  "accuracy": 85
+ },
+ "overgrowth": {
+  "name": "Overgrowth",
+  "type": "Wood",
+  "power": 56,
+  "accuracy": 80
+ },
+ "peregrine": {
+  "name": "Peregrine",
+  "type": "Sky",
+  "power": 44,
+  "accuracy": 80
+ },
+ "thunderball": {
+  "name": "Thunderball",
+  "type": "Earth",
+  "power": 56,
+  "accuracy": 100
+ },
+ "shadow_boxing": {
+  "name": "Shadow Boxing",
+  "type": "Heroic",
+  "power": 31,
+  "accuracy": 100
+ },
+ "invictus": {
+  "name": "Invictus",
+  "type": "Heroic",
+  "power": 31,
+  "accuracy": 95
+ },
+ "rock": {
+  "name": "Rock",
+  "type": "Earth",
+  "power": 38,
+  "accuracy": 100
+ },
+ "fester": {
+  "name": "Fester",
+  "type": "Venom",
+  "power": 56,
+  "accuracy": 100
+ },
+ "sand_spray": {
+  "name": "Sand Spray",
+  "type": "Earth",
+  "power": 31,
+  "accuracy": 100
+ },
+ "breathe_fire": {
+  "name": "Breathe Fire",
+  "type": "Fire",
+  "power": 56,
+  "accuracy": 80
+ },
+ "ten_thousand_feathers": {
+  "name": "Ten Thousand Feathers",
+  "type": "Sky",
+  "power": 75,
+  "accuracy": 90
+ },
+ "berserk": {
+  "name": "Berserk",
+  "type": "Heroic",
+  "power": 56,
+  "accuracy": 80
+ },
+ "flamethrower": {
+  "name": "Flamethrower",
+  "type": "Fire",
+  "power": 56,
+  "accuracy": 80
+ },
+ "magma": {
+  "name": "Magma",
+  "type": "Fire",
+  "power": 35,
+  "accuracy": 80
+ },
+ "ice_claw": {
+  "name": "Ice Claw",
+  "type": "Frost",
+  "power": 31,
+  "accuracy": 100
+ },
+ "peck": {
+  "name": "Peck",
+  "type": "Sky",
+  "power": 31,
+  "accuracy": 100
+ },
+ "orbs": {
+  "name": "Orbs",
+  "type": "Cosmic",
+  "power": 50,
+  "accuracy": 100
+ },
+ "biting_winds": {
+  "name": "Biting Winds",
+  "type": "Sky",
+  "power": 31,
+  "accuracy": 100
+ },
+ "tornado": {
+  "name": "Tornado",
+  "type": "Sky",
+  "power": 72,
+  "accuracy": 80
+ },
+ "punch": {
+  "name": "Punch",
+  "type": "Heroic",
+  "power": 38,
+  "accuracy": 90
+ },
+ "dreamwalk": {
+  "name": "Dreamwalk",
+  "type": "Cosmic",
+  "power": 70,
+  "accuracy": 100
+ },
+ "tail_lash": {
+  "name": "Tail Lash",
+  "type": "Normal",
+  "power": 30,
+  "accuracy": 100
+ },
+ "viper": {
+  "name": "Viper",
+  "type": "Venom",
+  "power": 72,
+  "accuracy": 80
+ },
+ "shuriken": {
+  "name": "Shuriken",
+  "type": "Metal",
+  "power": 56,
+  "accuracy": 80
+ }
 }

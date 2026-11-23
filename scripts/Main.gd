@@ -132,6 +132,7 @@ func _build_menu() -> void:
 		buttons.add_child(GbButton.new("HOST", _on_host))
 	var colours_b := GbButton.new("COLOURS", _on_colours)
 	buttons.add_child(colours_b)
+	buttons.add_child(GbButton.new("CREDITS", _show_credits))
 
 	status_label = Gb.label("")
 	status_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -139,6 +140,27 @@ func _build_menu() -> void:
 	box.add_child(status_label)
 	_set_status("Colours: " + Palette.current)
 	join_b.call_deferred("grab_focus")
+
+
+func _show_credits() -> void:
+	var box := Gb.box()
+	box.set_anchors_preset(Control.PRESET_FULL_RECT)
+	var v := VBoxContainer.new()
+	box.add_child(v)
+	var scroll := ScrollContainer.new()
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	v.add_child(scroll)
+	var l := Gb.label("")
+	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var f := FileAccess.open("res://data/credits.txt", FileAccess.READ)
+	l.text = f.get_as_text() if f else "See CREDITS.md"
+	scroll.add_child(l)
+	var back := GbButton.new("BACK", box.queue_free)
+	v.add_child(back)
+	add_child(box)
+	back.call_deferred("grab_focus")
 
 
 func _pick_starter(id: String) -> void:

@@ -1,0 +1,48 @@
+MONSTER ART
+From the Tuxemon project
+(github.com/Tuxemon/Tuxemon)
+
+"Agnite" by Leo, Sanglorian, and extyrannomon is licensed under CC-BY-SA 4.0
+"Agnidon" by Leo is licensed under CC-BY-SA 4.0
+"Agnigon" by Leo is licensed under CC-BY-SA 4.0
+"Dollfin" by Cavalcadeur is licensed under CC-BY-SA 4.0
+"Bigfin" by Cavalcadeur and rsg167 is licensed under CC-BY-SA 4.0
+"Sharpfin" by N/A is licensed under CC-BY-SA 4.0
+"Anoleaf" by Spalding004 is licensed under CC-BY-SA 4.0
+"Gectile" by Spalding004 is licensed under CC-BY-SA 4.0
+"Velocitile" by Spalding004 is licensed under CC-BY-SA 4.0
+"Cairfrey" by Spalding004 is licensed under CC-BY-SA 4.0
+"Possessun" by Spalding004 is licensed under CC-BY-SA 4.0
+"Vamporm" by Spalding004 is licensed under CC-BY-SA 4.0
+"Dracune" by Spalding004 is licensed under CC-BY-SA 4.0
+"Fluttaflap" by Spalding004 is licensed under CC-BY-SA 4.0
+"Propellercat" by tamashihoshi is licensed under CC-BY-SA 4.0
+"Pigabyte" by josepharaoh99 is licensed under CC-BY-SA 4.0
+"Axolightl" by Cavalcadeur and josepharaoh99 is licensed under CC-BY-SA 4.0
+"Lambert" by Sanglorian is licensed under CC-BY-SA 4.0
+"Legko" by Sanglorian is licensed under CC-BY-SA 4.0
+"Moloch" by Sanglorian is licensed under CC-BY-SA 4.0
+"Selket" by Catch Challenger is licensed under CC-BY-SA 4.0
+"Selmatek" by Catch Challenger is licensed under CC-BY-SA 4.0
+"Sludgehog" by josepharaoh99 is licensed under CC-BY-SA 4.0
+"Cardiling" by Spalding004 and Kyu is licensed under CC-BY-SA 4.0
+"Cardiwing" by Spalding004 is licensed under CC-BY-SA 4.0
+"Cardinale" by Spalding004 is licensed under CC-BY-SA 4.0
+"Merlicun" by Princess-pheonix is licensed under CC-BY-SA 4.0
+"Firomenis" by Princess-pheonix is licensed under CC-BY-SA 4.0
+"Noctula" by Catch Challenger is licensed under CC-BY-SA 4.0
+"Noctalo" by Catch Challenger is licensed under CC-BY-SA 4.0
+"Tweesher" by Leo and DevilDman is licensed under CC-BY-SA 4.0
+"Heronquak" by Leo and DevilDman is licensed under CC-BY-SA 4.0
+"Eaglace" by Leo and DevilDman is licensed under CC-BY-SA 4.0
+"Chillimp" by Chickenshowman is licensed under CC-BY-SA 4.0
+"Snowrilla" by Chickenshowman is licensed under CC-BY-SA 4.0
+"Eyenemy" by Cavalcadeur is licensed under CC-BY-SA 4.0
+"Eyesore" by Cavalcadeur and josepharaoh99 is licensed under CC-BY-SA 4.0
+"Wrougon" by Spalding004 and Chickenshowman is licensed under CC-BY-SA 4.0
+"Allagon" by Spalding004 and Chickenshowman is licensed under CC-BY-SA 4.0
+"Ferricran" by Spalding004 and Chickenshowman is licensed under CC-BY-SA 4.0
+
+FONT
+Press Start 2P by codeman38
+SIL Open Font License

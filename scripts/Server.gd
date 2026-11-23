@@ -71,6 +71,7 @@ func _load_saves() -> void:
 			for list_name in ["party", "box"]:
 				for m in saves[key].get(list_name, []):
 					_normalize(m)
+					GameData.migrate_monster(m)
 
 
 func _normalize(m: Dictionary) -> void:

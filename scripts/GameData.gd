@@ -20,19 +20,11 @@ const TILE_COLORS := {
 	T.FLOWER: Color("#7cc456"),
 }
 
-# attacking type -> {defending type: multiplier}. Anything missing = 1.0
-const TYPE_CHART := {
-	"Fire": {"Grass": 2.0, "Bug": 2.0, "Water": 0.5, "Rock": 0.5, "Fire": 0.5},
-	"Water": {"Fire": 2.0, "Rock": 2.0, "Water": 0.5, "Grass": 0.5},
-	"Grass": {"Water": 2.0, "Rock": 2.0, "Fire": 0.5, "Grass": 0.5, "Flying": 0.5, "Bug": 0.5},
-	"Electric": {"Water": 2.0, "Flying": 2.0, "Grass": 0.5, "Electric": 0.5, "Rock": 0.5},
-	"Rock": {"Fire": 2.0, "Flying": 2.0, "Bug": 2.0},
-	"Flying": {"Grass": 2.0, "Bug": 2.0, "Rock": 0.5, "Electric": 0.5},
-	"Bug": {"Grass": 2.0, "Fire": 0.5, "Flying": 0.5},
-	"Normal": {"Rock": 0.5},
-}
 
+# attacking type -> {defending type: multiplier}; anything missing = 1.0 (data/types.json)
+var type_chart: Dictionary = {}
 var monsters: Dictionary = {}
+var _tex_cache := {}
 var moves: Dictionary = {}
 var map: Array = [] # map[y][x] -> T
 var town_center := Vector2i(30, 20)
@@ -42,6 +34,7 @@ var heal_tile := Vector2i(30, 17)
 func _ready() -> void:
 	monsters = _load_json("res://data/monsters.json")
 	moves = _load_json("res://data/moves.json")
+	type_chart = _load_json("res://data/types.json")
 	_generate_map()
 
 
@@ -178,7 +171,36 @@ func give_xp(m: Dictionary, amount: int) -> Array:
 				if m.moves.size() > 4:
 					m.moves.pop_front()
 				lines.append("%s learned %s!" % [mon_name(m), moves[entry[1]].name])
+	for evo in monsters[m.species].get("evolutions", []):
+		if m.level >= int(evo[0]) and monsters.has(evo[1]):
+			var old_name := mon_name(m)
+			var ratio := float(m.hp) / float(max(1, m.max_hp))
+			m.species = evo[1]
+			calc_stats(m)
+			m.hp = max(1, int(round(m.max_hp * ratio)))
+			lines.append("What? %s is evolving!" % old_name)
+			lines.append("%s evolved into %s!" % [old_name, mon_name(m)])
+			break
 	return lines
+
+
+## Keeps saves from older versions working (renamed monsters, removed moves).
+func migrate_monster(m: Dictionary) -> void:
+	var renamed := {"embertail": "agnite", "splashkit": "dollfin", "sproutling": "anoleaf"}
+	if not monsters.has(m.species):
+		m.species = renamed.get(m.species, "cairfrey")
+	var keep := []
+	for mid in m.get("moves", []):
+		if moves.has(mid):
+			keep.append(mid)
+	if keep.is_empty():
+		for entry in monsters[m.species].moves:
+			if int(entry[0]) <= int(m.level):
+				keep.append(entry[1])
+		keep = keep.slice(max(0, keep.size() - 4))
+	m.moves = keep
+	calc_stats(m)
+	m.hp = clampi(int(m.get("hp", m.max_hp)), 0, m.max_hp)
 
 
 func mon_name(m: Dictionary) -> String:
@@ -187,7 +209,7 @@ func mon_name(m: Dictionary) -> String:
 
 func type_multiplier(move_type: String, def_types: Array) -> float:
 	var mult := 1.0
-	var row: Dictionary = TYPE_CHART.get(move_type, {})
+	var row: Dictionary = type_chart.get(move_type, {})
 	for t in def_types:
 		mult *= row.get(t, 1.0)
 	return mult
@@ -213,8 +235,9 @@ func pick_wild_species(rng: RandomNumberGenerator) -> String:
 	return monsters.keys()[0]
 
 
-# ---------------------------------------------------------------- placeholder art
-## Draws a simple original placeholder creature. Swap for real sprites later.
+# ---------------------------------------------------------------- monster sprites
+## Each sheet (from Tuxemon, see CREDITS.md) is 128x88: front 64x64, back 64x64,
+## then two 24x24 icon frames underneath.
 
 func _ellipse(c: Vector2, r: Vector2, n := 20) -> PackedVector2Array:
 	var pts := PackedVector2Array()
@@ -224,65 +247,47 @@ func _ellipse(c: Vector2, r: Vector2, n := 20) -> PackedVector2Array:
 	return pts
 
 
+func sheet(species: String) -> Texture2D:
+	if not _tex_cache.has(species):
+		var path: String = monsters.get(species, {}).get("sprite", "")
+		_tex_cache[species] = load(path) if path != "" and ResourceLoader.exists(path) else null
+	return _tex_cache[species]
+
+
+func _blit(ci: CanvasItem, tex: Texture2D, src: Rect2, center: Vector2, scale: float, flip: bool) -> void:
+	var size := src.size * scale
+	var dst := Rect2((center - size / 2.0).round(), size)
+	if flip:
+		dst.position.x += dst.size.x
+		dst.size.x = -dst.size.x
+	ci.draw_texture_rect_region(tex, dst, src)
+
+
+## Front view (what you see of the other side in battle).
+func draw_front(ci: CanvasItem, species: String, center: Vector2, scale := 1.0, flip := false) -> void:
+	var tex := sheet(species)
+	if tex:
+		_blit(ci, tex, Rect2(0, 0, 64, 64), center, scale, flip)
+
+
+## Back view (your own monster in battle).
+func draw_back(ci: CanvasItem, species: String, center: Vector2, scale := 1.0) -> void:
+	var tex := sheet(species)
+	if tex:
+		_blit(ci, tex, Rect2(64, 0, 64, 64), center, scale, false)
+
+
+## Small animated icon (overworld, party list, menus). frame 0 or 1.
+func draw_icon(ci: CanvasItem, species: String, center: Vector2, frame := 0, flip := false) -> void:
+	var tex := sheet(species)
+	if tex:
+		_blit(ci, tex, Rect2(24 * (frame % 2), 64, 24, 24), center, 1.0, flip)
+
+
+## Old entry point, kept so every caller still works: small sizes get the
+## icon, bigger sizes the front sprite.
 func draw_monster(ci: CanvasItem, species: String, c: Vector2, s: float, flip := false, bob := 0.0) -> void:
-	if not monsters.has(species):
-		return
-	var d: Dictionary = monsters[species]
-	var col := Color(d.color)
-	var acc := Color(d.accent)
-	var dark := col.darkened(0.45)
-	var f := -1.0 if flip else 1.0
-	c.y += bob
-	# shadow
-	ci.draw_colored_polygon(_ellipse(c + Vector2(0, s * 0.42), Vector2(s * 0.38, s * 0.1)), Color(0, 0, 0, 0.25))
-	match d.shape:
-		"fox":
-			ci.draw_colored_polygon(PackedVector2Array([c + Vector2(-0.22 * s * f, 0.2 * s), c + Vector2(-0.5 * s * f, -0.05 * s), c + Vector2(-0.6 * s * f, -0.3 * s), c + Vector2(-0.38 * s * f, 0.28 * s)]), acc)
-			ci.draw_colored_polygon(PackedVector2Array([c + Vector2(-0.25 * s, -0.15 * s), c + Vector2(-0.18 * s, -0.48 * s), c + Vector2(-0.02 * s, -0.22 * s)]), col)
-			ci.draw_colored_polygon(PackedVector2Array([c + Vector2(0.25 * s, -0.15 * s), c + Vector2(0.18 * s, -0.48 * s), c + Vector2(0.02 * s, -0.22 * s)]), col)
-		"bunny":
-			ci.draw_colored_polygon(_ellipse(c + Vector2(-0.12 * s, -0.42 * s), Vector2(0.07 * s, 0.22 * s)), col)
-			ci.draw_colored_polygon(_ellipse(c + Vector2(0.12 * s, -0.42 * s), Vector2(0.07 * s, 0.22 * s)), col)
-			ci.draw_colored_polygon(_ellipse(c + Vector2(-0.12 * s, -0.42 * s), Vector2(0.035 * s, 0.15 * s)), acc)
-			ci.draw_colored_polygon(_ellipse(c + Vector2(0.12 * s, -0.42 * s), Vector2(0.035 * s, 0.15 * s)), acc)
-		"bulb":
-			ci.draw_colored_polygon(_ellipse(c + Vector2(0.08 * s, -0.36 * s), Vector2(0.16 * s, 0.07 * s)), acc)
-			ci.draw_line(c + Vector2(0, -0.2 * s), c + Vector2(0, -0.38 * s), dark, max(1.0, s * 0.03))
-		"crab":
-			ci.draw_colored_polygon(_ellipse(c + Vector2(-0.38 * s, -0.05 * s), Vector2(0.12 * s, 0.1 * s)), acc)
-			ci.draw_colored_polygon(_ellipse(c + Vector2(0.38 * s, -0.05 * s), Vector2(0.12 * s, 0.1 * s)), acc)
-		"bug":
-			ci.draw_line(c + Vector2(-0.08 * s, -0.22 * s), c + Vector2(-0.18 * s, -0.42 * s), dark, max(1.0, s * 0.03))
-			ci.draw_line(c + Vector2(0.08 * s, -0.22 * s), c + Vector2(0.18 * s, -0.42 * s), dark, max(1.0, s * 0.03))
-		"wisp":
-			for i in 5:
-				var a := -PI / 2 + (i - 2) * 0.5
-				var p1 := c + Vector2(cos(a), sin(a)) * s * 0.25
-				var p2 := c + Vector2(cos(a), sin(a)) * s * 0.45
-				ci.draw_line(p1, p2, acc, max(1.0, s * 0.04))
-	# body
-	var body_r := Vector2(0.3 * s, 0.26 * s)
-	if d.shape == "seal" or d.shape == "blob":
-		body_r = Vector2(0.34 * s, 0.24 * s)
-	ci.draw_colored_polygon(_ellipse(c + Vector2(0, 0.08 * s), body_r), col)
-	# belly
-	ci.draw_colored_polygon(_ellipse(c + Vector2(0, 0.16 * s), body_r * Vector2(0.55, 0.5)), col.lightened(0.3))
-	match d.shape:
-		"bird":
-			ci.draw_colored_polygon(_ellipse(c + Vector2(-0.22 * s * f, 0.06 * s), Vector2(0.12 * s, 0.07 * s)), acc)
-			ci.draw_colored_polygon(PackedVector2Array([c + Vector2(0.18 * s * f, -0.02 * s), c + Vector2(0.34 * s * f, 0.03 * s), c + Vector2(0.18 * s * f, 0.08 * s)]), Color("#f2a33a"))
-		"seal":
-			ci.draw_colored_polygon(_ellipse(c + Vector2(-0.3 * s * f, 0.2 * s), Vector2(0.1 * s, 0.05 * s)), acc)
-		"blob":
-			ci.draw_colored_polygon(_ellipse(c + Vector2(-0.12 * s, 0.0), Vector2(0.05 * s, 0.04 * s)), acc)
-			ci.draw_colored_polygon(_ellipse(c + Vector2(0.16 * s, 0.12 * s), Vector2(0.04 * s, 0.03 * s)), acc)
-		"bug":
-			ci.draw_line(c + Vector2(-0.2 * s, 0.1 * s), c + Vector2(0.2 * s, 0.1 * s), acc, max(1.0, s * 0.04))
-	# eyes
-	var ex := 0.1 * s
-	var ey := 0.0
-	var off := 0.04 * s * f
-	for sx in [-1, 1]:
-		var e := c + Vector2(sx * ex + off, ey)
-		ci.draw_colored_polygon(_ellipse(e, Vector2(0.055 * s, 0.065 * s), 12), Color.WHITE)
-		ci.draw_colored_polygon(_ellipse(e + Vector2(0.015 * s * f, 0.01 * s), Vector2(0.03 * s, 0.04 * s), 10), Color("#1d1d24"))
+	if s <= 28.0:
+		draw_icon(ci, species, c + Vector2(0, bob), int(Time.get_ticks_msec() / 400) % 2, flip)
+	else:
+		draw_front(ci, species, c + Vector2(0, bob), maxf(1.0, round(s / 64.0)), flip)

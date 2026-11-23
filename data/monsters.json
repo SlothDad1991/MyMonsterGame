@@ -1,72 +1,2026 @@
 {
-  "embertail": {
-    "name": "Embertail", "types": ["Fire"], "starter": true,
-    "base": {"hp": 45, "atk": 55, "def": 40, "spd": 60},
-    "color": "#e8642c", "accent": "#ffd24a", "shape": "fox",
-    "catch_rate": 45, "wild_weight": 0,
-    "moves": [[1, "scratch"], [1, "ember"], [9, "quick_jab"], [16, "flame_burst"]]
+ "agnite": {
+  "name": "Agnite",
+  "types": [
+   "Fire"
+  ],
+  "starter": true,
+  "base": {
+   "hp": 60,
+   "atk": 60,
+   "def": 70,
+   "spd": 60
   },
-  "splashkit": {
-    "name": "Splashkit", "types": ["Water"], "starter": true,
-    "base": {"hp": 50, "atk": 48, "def": 55, "spd": 45},
-    "color": "#3b8fe0", "accent": "#bfe6ff", "shape": "seal",
-    "catch_rate": 45, "wild_weight": 0,
-    "moves": [[1, "tackle"], [1, "water_gun"], [9, "quick_jab"], [16, "bubble_jet"]]
+  "catch_rate": 100,
+  "wild_weight": 0,
+  "moves": [
+   [
+    1,
+    "gnaw"
+   ],
+   [
+    4,
+    "fire_claw"
+   ],
+   [
+    10,
+    "fire_ball"
+   ],
+   [
+    13,
+    "saber"
+   ],
+   [
+    22,
+    "kindling_flame"
+   ],
+   [
+    25,
+    "energy_claws"
+   ],
+   [
+    28,
+    "all_in"
+   ],
+   [
+    31,
+    "supernova"
+   ]
+  ],
+  "evolutions": [
+   [
+    24,
+    "agnidon"
+   ]
+  ],
+  "sprite": "res://art/monsters/agnite.png"
+ },
+ "agnidon": {
+  "name": "Agnidon",
+  "types": [
+   "Fire"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 75,
+   "atk": 75,
+   "def": 87,
+   "spd": 75
   },
-  "sproutling": {
-    "name": "Sproutling", "types": ["Grass"], "starter": true,
-    "base": {"hp": 55, "atk": 45, "def": 50, "spd": 45},
-    "color": "#4caf50", "accent": "#c5f27a", "shape": "bulb",
-    "catch_rate": 45, "wild_weight": 0,
-    "moves": [[1, "tackle"], [1, "vine_lash"], [9, "quick_jab"], [16, "leaf_storm"]]
+  "catch_rate": 70,
+  "wild_weight": 0,
+  "moves": [
+   [
+    1,
+    "gnaw"
+   ],
+   [
+    4,
+    "fire_claw"
+   ],
+   [
+    10,
+    "fire_ball"
+   ],
+   [
+    13,
+    "saber"
+   ],
+   [
+    22,
+    "kindling_flame"
+   ],
+   [
+    25,
+    "energy_claws"
+   ],
+   [
+    28,
+    "all_in"
+   ],
+   [
+    31,
+    "supernova"
+   ]
+  ],
+  "evolutions": [
+   [
+    36,
+    "agnigon"
+   ]
+  ],
+  "sprite": "res://art/monsters/agnidon.png"
+ },
+ "agnigon": {
+  "name": "Agnigon",
+  "types": [
+   "Fire",
+   "Shadow"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 90,
+   "atk": 90,
+   "def": 105,
+   "spd": 90
   },
-  "voltwisp": {
-    "name": "Voltwisp", "types": ["Electric"],
-    "base": {"hp": 38, "atk": 50, "def": 35, "spd": 80},
-    "color": "#f5d03b", "accent": "#7a5cff", "shape": "wisp",
-    "catch_rate": 120, "wild_weight": 8,
-    "moves": [[1, "spark"], [5, "quick_jab"], [14, "thunder_bolt"]]
+  "catch_rate": 35,
+  "wild_weight": 0,
+  "moves": [
+   [
+    1,
+    "gnaw"
+   ],
+   [
+    4,
+    "fire_claw"
+   ],
+   [
+    10,
+    "fire_ball"
+   ],
+   [
+    13,
+    "saber"
+   ],
+   [
+    22,
+    "kindling_flame"
+   ],
+   [
+    25,
+    "energy_claws"
+   ],
+   [
+    28,
+    "all_in"
+   ],
+   [
+    31,
+    "supernova"
+   ],
+   [
+    37,
+    "shadow_blast"
+   ]
+  ],
+  "evolutions": [],
+  "sprite": "res://art/monsters/agnigon.png"
+ },
+ "dollfin": {
+  "name": "Dollfin",
+  "types": [
+   "Water"
+  ],
+  "starter": true,
+  "base": {
+   "hp": 80,
+   "atk": 60,
+   "def": 80,
+   "spd": 40
   },
-  "pebbloon": {
-    "name": "Pebbloon", "types": ["Rock"],
-    "base": {"hp": 50, "atk": 55, "def": 75, "spd": 25},
-    "color": "#8d8174", "accent": "#5b5048", "shape": "blob",
-    "catch_rate": 150, "wild_weight": 10,
-    "moves": [[1, "tackle"], [5, "rock_toss"], [15, "rockslide"]]
+  "catch_rate": 100,
+  "wild_weight": 0,
+  "moves": [
+   [
+    1,
+    "goad"
+   ],
+   [
+    7,
+    "grinding"
+   ]
+  ],
+  "evolutions": [
+   [
+    16,
+    "bigfin"
+   ]
+  ],
+  "sprite": "res://art/monsters/dollfin.png"
+ },
+ "bigfin": {
+  "name": "Bigfin",
+  "types": [
+   "Water"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 100,
+   "atk": 75,
+   "def": 100,
+   "spd": 50
   },
-  "fluffinch": {
-    "name": "Fluffinch", "types": ["Normal", "Flying"],
-    "base": {"hp": 40, "atk": 45, "def": 38, "spd": 70},
-    "color": "#d9a066", "accent": "#fff4d6", "shape": "bird",
-    "catch_rate": 200, "wild_weight": 16,
-    "moves": [[1, "tackle"], [3, "gust"], [12, "wing_dive"]]
+  "catch_rate": 70,
+  "wild_weight": 0,
+  "moves": [
+   [
+    1,
+    "goad"
+   ],
+   [
+    7,
+    "grinding"
+   ],
+   [
+    19,
+    "font"
+   ],
+   [
+    25,
+    "starfall"
+   ],
+   [
+    31,
+    "water_blast"
+   ],
+   [
+    55,
+    "energy_beam"
+   ]
+  ],
+  "evolutions": [
+   [
+    32,
+    "sharpfin"
+   ]
+  ],
+  "sprite": "res://art/monsters/bigfin.png"
+ },
+ "sharpfin": {
+  "name": "Sharpfin",
+  "types": [
+   "Water",
+   "Heroic"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 100,
+   "atk": 75,
+   "def": 75,
+   "spd": 50
   },
-  "buzzlet": {
-    "name": "Buzzlet", "types": ["Bug"],
-    "base": {"hp": 40, "atk": 40, "def": 35, "spd": 50},
-    "color": "#9bc53d", "accent": "#2d3a12", "shape": "bug",
-    "catch_rate": 230, "wild_weight": 18,
-    "moves": [[1, "tackle"], [3, "bug_bite"], [12, "sting_swarm"]]
+  "catch_rate": 70,
+  "wild_weight": 0,
+  "moves": [
+   [
+    1,
+    "goad"
+   ],
+   [
+    7,
+    "grinding"
+   ],
+   [
+    16,
+    "splinter"
+   ],
+   [
+    19,
+    "web"
+   ],
+   [
+    25,
+    "water_blast"
+   ],
+   [
+    40,
+    "all_in"
+   ]
+  ],
+  "evolutions": [],
+  "sprite": "res://art/monsters/sharpfin.png"
+ },
+ "anoleaf": {
+  "name": "Anoleaf",
+  "types": [
+   "Wood"
+  ],
+  "starter": true,
+  "base": {
+   "hp": 60,
+   "atk": 80,
+   "def": 60,
+   "spd": 60
   },
-  "mosscrab": {
-    "name": "Mosscrab", "types": ["Water", "Grass"],
-    "base": {"hp": 55, "atk": 60, "def": 65, "spd": 30},
-    "color": "#2f8f83", "accent": "#7fd36b", "shape": "crab",
-    "catch_rate": 90, "wild_weight": 7,
-    "moves": [[1, "water_gun"], [6, "vine_lash"], [14, "bubble_jet"]]
+  "catch_rate": 100,
+  "wild_weight": 0,
+  "moves": [
+   [
+    1,
+    "leaf_stab"
+   ],
+   [
+    1,
+    "feint"
+   ],
+   [
+    4,
+    "assault"
+   ],
+   [
+    13,
+    "whirlwind"
+   ],
+   [
+    25,
+    "splinter"
+   ],
+   [
+    40,
+    "needle"
+   ],
+   [
+    43,
+    "all_in"
+   ],
+   [
+    46,
+    "thorn_burst"
+   ]
+  ],
+  "evolutions": [
+   [
+    18,
+    "gectile"
+   ]
+  ],
+  "sprite": "res://art/monsters/anoleaf.png"
+ },
+ "gectile": {
+  "name": "Gectile",
+  "types": [
+   "Wood"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 50,
+   "atk": 100,
+   "def": 62,
+   "spd": 100
   },
-  "cinderhog": {
-    "name": "Cinderhog", "types": ["Fire", "Rock"],
-    "base": {"hp": 60, "atk": 65, "def": 60, "spd": 35},
-    "color": "#7a3b2e", "accent": "#ff8a3d", "shape": "blob",
-    "catch_rate": 75, "wild_weight": 5,
-    "moves": [[1, "tackle"], [5, "ember"], [12, "rock_toss"], [18, "flame_burst"]]
+  "catch_rate": 70,
+  "wild_weight": 0,
+  "moves": [
+   [
+    1,
+    "leaf_stab"
+   ],
+   [
+    1,
+    "feint"
+   ],
+   [
+    4,
+    "assault"
+   ],
+   [
+    13,
+    "whirlwind"
+   ],
+   [
+    25,
+    "splinter"
+   ],
+   [
+    40,
+    "needle"
+   ],
+   [
+    43,
+    "all_in"
+   ],
+   [
+    46,
+    "thorn_burst"
+   ]
+  ],
+  "evolutions": [
+   [
+    36,
+    "velocitile"
+   ]
+  ],
+  "sprite": "res://art/monsters/gectile.png"
+ },
+ "velocitile": {
+  "name": "Velocitile",
+  "types": [
+   "Wood"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 60,
+   "atk": 120,
+   "def": 75,
+   "spd": 120
   },
-  "dustbun": {
-    "name": "Dustbun", "types": ["Normal"],
-    "base": {"hp": 45, "atk": 50, "def": 40, "spd": 60},
-    "color": "#c9c1b6", "accent": "#f2a7b8", "shape": "bunny",
-    "catch_rate": 255, "wild_weight": 20,
-    "moves": [[1, "tackle"], [4, "quick_jab"], [10, "scratch"]]
-  }
+  "catch_rate": 35,
+  "wild_weight": 0,
+  "moves": [
+   [
+    1,
+    "leaf_stab"
+   ],
+   [
+    1,
+    "feint"
+   ],
+   [
+    4,
+    "assault"
+   ],
+   [
+    13,
+    "whirlwind"
+   ],
+   [
+    25,
+    "splinter"
+   ],
+   [
+    40,
+    "needle"
+   ],
+   [
+    43,
+    "all_in"
+   ],
+   [
+    46,
+    "thorn_burst"
+   ]
+  ],
+  "evolutions": [],
+  "sprite": "res://art/monsters/velocitile.png"
+ },
+ "cairfrey": {
+  "name": "Cairfrey",
+  "types": [
+   "Normal"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 80,
+   "atk": 80,
+   "def": 80,
+   "spd": 40
+  },
+  "catch_rate": 100,
+  "wild_weight": 18,
+  "moves": [
+   [
+    1,
+    "pseudopod"
+   ],
+   [
+    4,
+    "stampede"
+   ],
+   [
+    13,
+    "greenstone"
+   ],
+   [
+    16,
+    "muddle"
+   ],
+   [
+    19,
+    "quicksand"
+   ],
+   [
+    25,
+    "crystal"
+   ],
+   [
+    28,
+    "muck"
+   ],
+   [
+    31,
+    "amnesia"
+   ],
+   [
+    37,
+    "bubble_trap"
+   ],
+   [
+    40,
+    "constrict"
+   ]
+  ],
+  "evolutions": [
+   [
+    32,
+    "possessun"
+   ]
+  ],
+  "sprite": "res://art/monsters/cairfrey.png"
+ },
+ "possessun": {
+  "name": "Possessun",
+  "types": [
+   "Shadow"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 100,
+   "atk": 100,
+   "def": 100,
+   "spd": 50
+  },
+  "catch_rate": 70,
+  "wild_weight": 0,
+  "moves": [
+   [
+    1,
+    "pseudopod"
+   ],
+   [
+    4,
+    "stampede"
+   ],
+   [
+    13,
+    "greenstone"
+   ],
+   [
+    16,
+    "muddle"
+   ],
+   [
+    19,
+    "quicksand"
+   ],
+   [
+    25,
+    "crystal"
+   ],
+   [
+    28,
+    "muck"
+   ],
+   [
+    31,
+    "amnesia"
+   ],
+   [
+    37,
+    "bubble_trap"
+   ],
+   [
+    40,
+    "constrict"
+   ]
+  ],
+  "evolutions": [],
+  "sprite": "res://art/monsters/possessun.png"
+ },
+ "vamporm": {
+  "name": "Vamporm",
+  "types": [
+   "Venom",
+   "Shadow"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 70,
+   "atk": 80,
+   "def": 70,
+   "spd": 50
+  },
+  "catch_rate": 100,
+  "wild_weight": 18,
+  "moves": [
+   [
+    1,
+    "spit_poison"
+   ],
+   [
+    7,
+    "font"
+   ],
+   [
+    13,
+    "goad"
+   ],
+   [
+    16,
+    "tonguespear"
+   ],
+   [
+    25,
+    "venomous_tentacle"
+   ],
+   [
+    55,
+    "shadow_blast"
+   ]
+  ],
+  "evolutions": [
+   [
+    9,
+    "dracune"
+   ]
+  ],
+  "sprite": "res://art/monsters/vamporm.png"
+ },
+ "dracune": {
+  "name": "Dracune",
+  "types": [
+   "Venom",
+   "Shadow"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 100,
+   "atk": 100,
+   "def": 100,
+   "spd": 50
+  },
+  "catch_rate": 70,
+  "wild_weight": 0,
+  "moves": [
+   [
+    1,
+    "spit_poison"
+   ],
+   [
+    7,
+    "font"
+   ],
+   [
+    13,
+    "goad"
+   ],
+   [
+    16,
+    "tonguespear"
+   ],
+   [
+    25,
+    "venomous_tentacle"
+   ],
+   [
+    55,
+    "shadow_blast"
+   ]
+  ],
+  "evolutions": [
+   [
+    12,
+    "fluttaflap"
+   ]
+  ],
+  "sprite": "res://art/monsters/dracune.png"
+ },
+ "fluttaflap": {
+  "name": "Fluttaflap",
+  "types": [
+   "Sky",
+   "Shadow"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 105,
+   "atk": 120,
+   "def": 105,
+   "spd": 75
+  },
+  "catch_rate": 35,
+  "wild_weight": 0,
+  "moves": [
+   [
+    1,
+    "spit_poison"
+   ],
+   [
+    7,
+    "font"
+   ],
+   [
+    13,
+    "goad"
+   ],
+   [
+    16,
+    "tonguespear"
+   ],
+   [
+    25,
+    "venomous_tentacle"
+   ],
+   [
+    55,
+    "shadow_blast"
+   ]
+  ],
+  "evolutions": [],
+  "sprite": "res://art/monsters/fluttaflap.png"
+ },
+ "propellercat": {
+  "name": "Propellercat",
+  "types": [
+   "Normal",
+   "Sky"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 48,
+   "atk": 96,
+   "def": 60,
+   "spd": 96
+  },
+  "catch_rate": 100,
+  "wild_weight": 14,
+  "moves": [
+   [
+    1,
+    "wing_tip"
+   ],
+   [
+    1,
+    "blade"
+   ],
+   [
+    7,
+    "strike"
+   ],
+   [
+    13,
+    "slice"
+   ],
+   [
+    16,
+    "beam"
+   ],
+   [
+    19,
+    "perfect_cut"
+   ],
+   [
+    25,
+    "bubble_trap"
+   ],
+   [
+    28,
+    "tip"
+   ],
+   [
+    40,
+    "meltdown"
+   ]
+  ],
+  "evolutions": [],
+  "sprite": "res://art/monsters/propellercat.png"
+ },
+ "pigabyte": {
+  "name": "Pigabyte",
+  "types": [
+   "Metal",
+   "Normal"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 96,
+   "atk": 96,
+   "def": 96,
+   "spd": 48
+  },
+  "catch_rate": 100,
+  "wild_weight": 12,
+  "moves": [
+   [
+    1,
+    "sunburst"
+   ],
+   [
+    1,
+    "wall_of_steel"
+   ],
+   [
+    7,
+    "sleep_bomb"
+   ],
+   [
+    13,
+    "meltdown"
+   ],
+   [
+    19,
+    "beam"
+   ],
+   [
+    25,
+    "bullet"
+   ],
+   [
+    28,
+    "bubble_trap"
+   ],
+   [
+    37,
+    "battery_acid"
+   ]
+  ],
+  "evolutions": [],
+  "sprite": "res://art/monsters/pigabyte.png"
+ },
+ "axolightl": {
+  "name": "Axolightl",
+  "types": [
+   "Water"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 50,
+   "atk": 80,
+   "def": 40,
+   "spd": 70
+  },
+  "catch_rate": 100,
+  "wild_weight": 10,
+  "moves": [
+   [
+    1,
+    "starfall"
+   ],
+   [
+    1,
+    "midnight_mantle"
+   ],
+   [
+    4,
+    "spit_poison"
+   ],
+   [
+    16,
+    "torch"
+   ],
+   [
+    28,
+    "goad"
+   ],
+   [
+    31,
+    "grinding"
+   ]
+  ],
+  "evolutions": [],
+  "sprite": "res://art/monsters/axolightl.png"
+ },
+ "lambert": {
+  "name": "Lambert",
+  "types": [
+   "Wood"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 40,
+   "atk": 60,
+   "def": 60,
+   "spd": 80
+  },
+  "catch_rate": 100,
+  "wild_weight": 10,
+  "moves": [
+   [
+    1,
+    "sting"
+   ],
+   [
+    1,
+    "blossom"
+   ],
+   [
+    7,
+    "splinter"
+   ],
+   [
+    28,
+    "overgrowth"
+   ],
+   [
+    31,
+    "peregrine"
+   ],
+   [
+    34,
+    "spit_poison"
+   ],
+   [
+    43,
+    "thunderball"
+   ],
+   [
+    46,
+    "shadow_boxing"
+   ],
+   [
+    52,
+    "invictus"
+   ]
+  ],
+  "evolutions": [
+   [
+    24,
+    "legko"
+   ]
+  ],
+  "sprite": "res://art/monsters/lambert.png"
+ },
+ "legko": {
+  "name": "Legko",
+  "types": [
+   "Wood"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 75,
+   "atk": 100,
+   "def": 75,
+   "spd": 75
+  },
+  "catch_rate": 70,
+  "wild_weight": 0,
+  "moves": [
+   [
+    1,
+    "sting"
+   ],
+   [
+    1,
+    "blossom"
+   ],
+   [
+    7,
+    "splinter"
+   ],
+   [
+    28,
+    "overgrowth"
+   ],
+   [
+    31,
+    "peregrine"
+   ],
+   [
+    34,
+    "spit_poison"
+   ],
+   [
+    43,
+    "thunderball"
+   ],
+   [
+    46,
+    "shadow_boxing"
+   ],
+   [
+    52,
+    "invictus"
+   ]
+  ],
+  "evolutions": [
+   [
+    36,
+    "moloch"
+   ]
+  ],
+  "sprite": "res://art/monsters/legko.png"
+ },
+ "moloch": {
+  "name": "Moloch",
+  "types": [
+   "Wood",
+   "Heroic"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 105,
+   "atk": 120,
+   "def": 105,
+   "spd": 75
+  },
+  "catch_rate": 35,
+  "wild_weight": 0,
+  "moves": [
+   [
+    1,
+    "sting"
+   ],
+   [
+    1,
+    "blossom"
+   ],
+   [
+    7,
+    "splinter"
+   ],
+   [
+    28,
+    "overgrowth"
+   ],
+   [
+    31,
+    "peregrine"
+   ],
+   [
+    34,
+    "spit_poison"
+   ],
+   [
+    43,
+    "thunderball"
+   ],
+   [
+    46,
+    "shadow_boxing"
+   ],
+   [
+    52,
+    "invictus"
+   ],
+   [
+    55,
+    "energy_beam"
+   ]
+  ],
+  "evolutions": [],
+  "sprite": "res://art/monsters/moloch.png"
+ },
+ "selket": {
+  "name": "Selket",
+  "types": [
+   "Earth",
+   "Venom"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 70,
+   "atk": 80,
+   "def": 70,
+   "spd": 50
+  },
+  "catch_rate": 100,
+  "wild_weight": 10,
+  "moves": [
+   [
+    1,
+    "rock"
+   ],
+   [
+    4,
+    "crystal"
+   ],
+   [
+    25,
+    "quicksand"
+   ],
+   [
+    28,
+    "fester"
+   ]
+  ],
+  "evolutions": [
+   [
+    18,
+    "selmatek"
+   ]
+  ],
+  "sprite": "res://art/monsters/selket.png"
+ },
+ "selmatek": {
+  "name": "Selmatek",
+  "types": [
+   "Earth",
+   "Venom"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 87,
+   "atk": 100,
+   "def": 87,
+   "spd": 62
+  },
+  "catch_rate": 70,
+  "wild_weight": 0,
+  "moves": [
+   [
+    1,
+    "rock"
+   ],
+   [
+    4,
+    "crystal"
+   ],
+   [
+    25,
+    "quicksand"
+   ],
+   [
+    28,
+    "fester"
+   ]
+  ],
+  "evolutions": [],
+  "sprite": "res://art/monsters/selmatek.png"
+ },
+ "sludgehog": {
+  "name": "Sludgehog",
+  "types": [
+   "Earth",
+   "Wood"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 96,
+   "atk": 96,
+   "def": 96,
+   "spd": 48
+  },
+  "catch_rate": 100,
+  "wild_weight": 8,
+  "moves": [
+   [
+    1,
+    "sting"
+   ],
+   [
+    1,
+    "pseudopod"
+   ],
+   [
+    4,
+    "energy_claws"
+   ],
+   [
+    7,
+    "thunderball"
+   ],
+   [
+    13,
+    "sand_spray"
+   ],
+   [
+    19,
+    "needle"
+   ],
+   [
+    40,
+    "thorn_burst"
+   ]
+  ],
+  "evolutions": [],
+  "sprite": "res://art/monsters/sludgehog.png"
+ },
+ "cardiling": {
+  "name": "Cardiling",
+  "types": [
+   "Fire",
+   "Sky"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 40,
+   "atk": 80,
+   "def": 50,
+   "spd": 80
+  },
+  "catch_rate": 100,
+  "wild_weight": 8,
+  "moves": [
+   [
+    1,
+    "wing_tip"
+   ],
+   [
+    10,
+    "breathe_fire"
+   ],
+   [
+    13,
+    "fire_claw"
+   ],
+   [
+    19,
+    "saber"
+   ],
+   [
+    25,
+    "kindling_flame"
+   ],
+   [
+    28,
+    "peregrine"
+   ],
+   [
+    31,
+    "ten_thousand_feathers"
+   ],
+   [
+    40,
+    "berserk"
+   ],
+   [
+    43,
+    "all_in"
+   ],
+   [
+    46,
+    "flamethrower"
+   ]
+  ],
+  "evolutions": [
+   [
+    18,
+    "cardiwing"
+   ]
+  ],
+  "sprite": "res://art/monsters/cardiling.png"
+ },
+ "cardiwing": {
+  "name": "Cardiwing",
+  "types": [
+   "Fire",
+   "Sky"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 50,
+   "atk": 100,
+   "def": 62,
+   "spd": 100
+  },
+  "catch_rate": 70,
+  "wild_weight": 0,
+  "moves": [
+   [
+    1,
+    "wing_tip"
+   ],
+   [
+    10,
+    "breathe_fire"
+   ],
+   [
+    13,
+    "fire_claw"
+   ],
+   [
+    19,
+    "saber"
+   ],
+   [
+    25,
+    "kindling_flame"
+   ],
+   [
+    28,
+    "peregrine"
+   ],
+   [
+    31,
+    "ten_thousand_feathers"
+   ],
+   [
+    40,
+    "berserk"
+   ],
+   [
+    43,
+    "all_in"
+   ],
+   [
+    46,
+    "flamethrower"
+   ]
+  ],
+  "evolutions": [
+   [
+    36,
+    "cardinale"
+   ]
+  ],
+  "sprite": "res://art/monsters/cardiwing.png"
+ },
+ "cardinale": {
+  "name": "Cardinale",
+  "types": [
+   "Fire",
+   "Sky"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 60,
+   "atk": 120,
+   "def": 75,
+   "spd": 120
+  },
+  "catch_rate": 35,
+  "wild_weight": 0,
+  "moves": [
+   [
+    1,
+    "wing_tip"
+   ],
+   [
+    10,
+    "breathe_fire"
+   ],
+   [
+    13,
+    "fire_claw"
+   ],
+   [
+    19,
+    "saber"
+   ],
+   [
+    25,
+    "kindling_flame"
+   ],
+   [
+    28,
+    "peregrine"
+   ],
+   [
+    31,
+    "ten_thousand_feathers"
+   ],
+   [
+    40,
+    "berserk"
+   ],
+   [
+    43,
+    "all_in"
+   ],
+   [
+    46,
+    "flamethrower"
+   ]
+  ],
+  "evolutions": [],
+  "sprite": "res://art/monsters/cardinale.png"
+ },
+ "merlicun": {
+  "name": "Merlicun",
+  "types": [
+   "Cosmic",
+   "Normal"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 60,
+   "atk": 80,
+   "def": 60,
+   "spd": 60
+  },
+  "catch_rate": 100,
+  "wild_weight": 8,
+  "moves": [
+   [
+    1,
+    "fire_ball"
+   ],
+   [
+    1,
+    "fire_claw"
+   ],
+   [
+    4,
+    "muddle"
+   ],
+   [
+    7,
+    "breathe_fire"
+   ],
+   [
+    16,
+    "kindling_flame"
+   ],
+   [
+    28,
+    "sunburst"
+   ],
+   [
+    31,
+    "magma"
+   ],
+   [
+    40,
+    "battery_acid"
+   ]
+  ],
+  "evolutions": [
+   [
+    20,
+    "firomenis"
+   ]
+  ],
+  "sprite": "res://art/monsters/merlicun.png"
+ },
+ "firomenis": {
+  "name": "Firomenis",
+  "types": [
+   "Metal",
+   "Cosmic"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 75,
+   "atk": 75,
+   "def": 87,
+   "spd": 75
+  },
+  "catch_rate": 70,
+  "wild_weight": 0,
+  "moves": [
+   [
+    1,
+    "fire_ball"
+   ],
+   [
+    1,
+    "fire_claw"
+   ],
+   [
+    4,
+    "muddle"
+   ],
+   [
+    7,
+    "breathe_fire"
+   ],
+   [
+    16,
+    "kindling_flame"
+   ],
+   [
+    28,
+    "sunburst"
+   ],
+   [
+    31,
+    "magma"
+   ],
+   [
+    40,
+    "battery_acid"
+   ]
+  ],
+  "evolutions": [],
+  "sprite": "res://art/monsters/firomenis.png"
+ },
+ "noctula": {
+  "name": "Noctula",
+  "types": [
+   "Sky",
+   "Shadow"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 40,
+   "atk": 80,
+   "def": 50,
+   "spd": 80
+  },
+  "catch_rate": 100,
+  "wild_weight": 8,
+  "moves": [
+   [
+    1,
+    "midnight_mantle"
+   ],
+   [
+    4,
+    "goad"
+   ],
+   [
+    7,
+    "font"
+   ],
+   [
+    25,
+    "starfall"
+   ],
+   [
+    28,
+    "font"
+   ]
+  ],
+  "evolutions": [
+   [
+    18,
+    "noctalo"
+   ]
+  ],
+  "sprite": "res://art/monsters/noctula.png"
+ },
+ "noctalo": {
+  "name": "Noctalo",
+  "types": [
+   "Sky",
+   "Shadow"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 50,
+   "atk": 100,
+   "def": 62,
+   "spd": 100
+  },
+  "catch_rate": 70,
+  "wild_weight": 0,
+  "moves": [
+   [
+    1,
+    "midnight_mantle"
+   ],
+   [
+    4,
+    "goad"
+   ],
+   [
+    7,
+    "font"
+   ],
+   [
+    25,
+    "starfall"
+   ],
+   [
+    28,
+    "font"
+   ],
+   [
+    55,
+    "shadow_blast"
+   ]
+  ],
+  "evolutions": [],
+  "sprite": "res://art/monsters/noctalo.png"
+ },
+ "tweesher": {
+  "name": "Tweesher",
+  "types": [
+   "Frost"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 40,
+   "atk": 80,
+   "def": 50,
+   "spd": 80
+  },
+  "catch_rate": 100,
+  "wild_weight": 6,
+  "moves": [
+   [
+    1,
+    "ice_claw"
+   ],
+   [
+    1,
+    "peck"
+   ],
+   [
+    4,
+    "orbs"
+   ],
+   [
+    31,
+    "biting_winds"
+   ],
+   [
+    43,
+    "font"
+   ]
+  ],
+  "evolutions": [
+   [
+    24,
+    "heronquak"
+   ]
+  ],
+  "sprite": "res://art/monsters/tweesher.png"
+ },
+ "heronquak": {
+  "name": "Heronquak",
+  "types": [
+   "Frost",
+   "Sky"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 50,
+   "atk": 100,
+   "def": 62,
+   "spd": 100
+  },
+  "catch_rate": 70,
+  "wild_weight": 0,
+  "moves": [
+   [
+    1,
+    "ice_claw"
+   ],
+   [
+    1,
+    "peck"
+   ],
+   [
+    4,
+    "orbs"
+   ],
+   [
+    31,
+    "biting_winds"
+   ],
+   [
+    43,
+    "font"
+   ]
+  ],
+  "evolutions": [
+   [
+    36,
+    "eaglace"
+   ]
+  ],
+  "sprite": "res://art/monsters/heronquak.png"
+ },
+ "eaglace": {
+  "name": "Eaglace",
+  "types": [
+   "Frost",
+   "Sky"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 60,
+   "atk": 120,
+   "def": 75,
+   "spd": 120
+  },
+  "catch_rate": 35,
+  "wild_weight": 0,
+  "moves": [
+   [
+    1,
+    "ice_claw"
+   ],
+   [
+    1,
+    "peck"
+   ],
+   [
+    4,
+    "orbs"
+   ],
+   [
+    31,
+    "biting_winds"
+   ],
+   [
+    43,
+    "font"
+   ],
+   [
+    61,
+    "tornado"
+   ]
+  ],
+  "evolutions": [],
+  "sprite": "res://art/monsters/eaglace.png"
+ },
+ "chillimp": {
+  "name": "Chillimp",
+  "types": [
+   "Frost",
+   "Heroic"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 70,
+   "atk": 80,
+   "def": 70,
+   "spd": 50
+  },
+  "catch_rate": 100,
+  "wild_weight": 6,
+  "moves": [
+   [
+    1,
+    "ice_claw"
+   ],
+   [
+    1,
+    "punch"
+   ]
+  ],
+  "evolutions": [
+   [
+    18,
+    "snowrilla"
+   ]
+  ],
+  "sprite": "res://art/monsters/chillimp.png"
+ },
+ "snowrilla": {
+  "name": "Snowrilla",
+  "types": [
+   "Frost",
+   "Heroic"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 87,
+   "atk": 100,
+   "def": 87,
+   "spd": 62
+  },
+  "catch_rate": 70,
+  "wild_weight": 0,
+  "moves": [
+   [
+    1,
+    "ice_claw"
+   ],
+   [
+    1,
+    "punch"
+   ]
+  ],
+  "evolutions": [],
+  "sprite": "res://art/monsters/snowrilla.png"
+ },
+ "eyenemy": {
+  "name": "Eyenemy",
+  "types": [
+   "Cosmic"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 60,
+   "atk": 80,
+   "def": 60,
+   "spd": 60
+  },
+  "catch_rate": 100,
+  "wild_weight": 5,
+  "moves": [
+   [
+    1,
+    "bullet"
+   ],
+   [
+    1,
+    "spit_poison"
+   ],
+   [
+    4,
+    "amnesia"
+   ],
+   [
+    7,
+    "sleep_bomb"
+   ],
+   [
+    31,
+    "dreamwalk"
+   ],
+   [
+    55,
+    "energy_beam"
+   ]
+  ],
+  "evolutions": [
+   [
+    18,
+    "eyesore"
+   ]
+  ],
+  "sprite": "res://art/monsters/eyenemy.png"
+ },
+ "eyesore": {
+  "name": "Eyesore",
+  "types": [
+   "Cosmic"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 75,
+   "atk": 100,
+   "def": 75,
+   "spd": 75
+  },
+  "catch_rate": 70,
+  "wild_weight": 0,
+  "moves": [
+   [
+    1,
+    "bullet"
+   ],
+   [
+    1,
+    "spit_poison"
+   ],
+   [
+    4,
+    "amnesia"
+   ],
+   [
+    7,
+    "sleep_bomb"
+   ],
+   [
+    31,
+    "dreamwalk"
+   ],
+   [
+    55,
+    "energy_beam"
+   ]
+  ],
+  "evolutions": [],
+  "sprite": "res://art/monsters/eyesore.png"
+ },
+ "wrougon": {
+  "name": "Wrougon",
+  "types": [
+   "Metal"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 60,
+   "atk": 60,
+   "def": 70,
+   "spd": 60
+  },
+  "catch_rate": 100,
+  "wild_weight": 4,
+  "moves": [
+   [
+    1,
+    "tail_lash"
+   ],
+   [
+    1,
+    "bullet"
+   ],
+   [
+    4,
+    "viper"
+   ],
+   [
+    13,
+    "muddle"
+   ],
+   [
+    16,
+    "strike"
+   ],
+   [
+    43,
+    "shuriken"
+   ],
+   [
+    46,
+    "wall_of_steel"
+   ],
+   [
+    61,
+    "amnesia"
+   ],
+   [
+    70,
+    "shadow_blast"
+   ]
+  ],
+  "evolutions": [
+   [
+    32,
+    "allagon"
+   ]
+  ],
+  "sprite": "res://art/monsters/wrougon.png"
+ },
+ "allagon": {
+  "name": "Allagon",
+  "types": [
+   "Metal"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 75,
+   "atk": 75,
+   "def": 87,
+   "spd": 75
+  },
+  "catch_rate": 70,
+  "wild_weight": 0,
+  "moves": [
+   [
+    1,
+    "tail_lash"
+   ],
+   [
+    1,
+    "bullet"
+   ],
+   [
+    4,
+    "viper"
+   ],
+   [
+    13,
+    "muddle"
+   ],
+   [
+    16,
+    "strike"
+   ],
+   [
+    43,
+    "shuriken"
+   ],
+   [
+    46,
+    "wall_of_steel"
+   ],
+   [
+    61,
+    "amnesia"
+   ],
+   [
+    70,
+    "shadow_blast"
+   ]
+  ],
+  "evolutions": [
+   [
+    54,
+    "ferricran"
+   ]
+  ],
+  "sprite": "res://art/monsters/allagon.png"
+ },
+ "ferricran": {
+  "name": "Ferricran",
+  "types": [
+   "Metal"
+  ],
+  "starter": false,
+  "base": {
+   "hp": 90,
+   "atk": 90,
+   "def": 105,
+   "spd": 90
+  },
+  "catch_rate": 35,
+  "wild_weight": 0,
+  "moves": [
+   [
+    1,
+    "tail_lash"
+   ],
+   [
+    1,
+    "bullet"
+   ],
+   [
+    4,
+    "viper"
+   ],
+   [
+    13,
+    "muddle"
+   ],
+   [
+    16,
+    "strike"
+   ],
+   [
+    43,
+    "shuriken"
+   ],
+   [
+    46,
+    "wall_of_steel"
+   ],
+   [
+    61,
+    "amnesia"
+   ],
+   [
+    70,
+    "shadow_blast"
+   ]
+  ],
+  "evolutions": [],
+  "sprite": "res://art/monsters/ferricran.png"
+ }
 }

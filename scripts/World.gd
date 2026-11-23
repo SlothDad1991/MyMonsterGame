@@ -293,7 +293,7 @@ func _draw() -> void:
 					frame = 1 if step_parity else 2
 				_draw_trainer(my_draw, my_dir, my_color, frame)
 			"follower":
-				GameData.draw_monster(self, party[0].species, follower_draw.round() + Vector2(0, 1), 13, my_dir == 2, 0.0)
+				GameData.draw_monster(self, party[0].species, follower_draw.round() + Vector2(0, -3), 13, my_dir == 3, 0.0)
 	# tall grass hides feet, like the originals
 	for e in ents:
 		var pos: Vector2 = my_draw if e.kind == "me" else (follower_draw if e.kind == "follower" else e.d.draw)
@@ -405,7 +405,7 @@ func _draw_wild(w: Dictionary) -> void:
 	var hop := 0.0
 	if w.draw != _center(w.pos):
 		hop = -1.0
-	GameData.draw_monster(self, w.species, w.draw.round() + Vector2(0, -1 + hop), 15, w.flip, 0.0)
+	GameData.draw_monster(self, w.species, w.draw.round() + Vector2(0, -3 + hop), 15, w.flip, 0.0)
 	if w.in_battle:
 		_name_tag(w.draw + Vector2(0, -13), "!")
 
@@ -452,7 +452,7 @@ func _on_world(plist: Array, wlist: Array) -> void:
 			wilds[id] = {"draw": _center(pos), "flip": false}
 		var w: Dictionary = wilds[id]
 		if w.has("pos") and pos.x != w.pos.x:
-			w.flip = pos.x < w.pos.x
+			w.flip = pos.x > w.pos.x # icons face left; mirror when walking right
 		w.species = e[1]
 		w.pos = pos
 		w.level = int(e[4])
